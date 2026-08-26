@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { buildCompletedResult } from '../../../../shared/results';
 import { DateTimePicker } from '../../components/DateTimePicker';
 import { Decorations } from '../../components/Decorations';
 import { FinalResult } from '../../components/FinalResult';
@@ -12,6 +13,7 @@ import type { MascotAssetKey } from '../mascot/assets';
 import { interactionBehavior, reactionHoldMs } from './interactionConfig';
 import type { ChoiceOption, ExperienceStep, ScenarioId, ScenarioSelections } from './model';
 import { noConversationFor, secondaryChoices, tertiaryChoices } from './scenarioConfig';
+import { useResultNotification } from './resultNotification';
 
 type ScenarioExperienceProps = { scenario: ScenarioId };
 
@@ -29,6 +31,8 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
   const timerRef = useRef<number | null>(null);
   const recipientTimerRef = useRef<number | null>(null);
   const progressingRef = useRef(false);
+  const completedResult = step === 4 ? buildCompletedResult(scenario, selections) : null;
+  useResultNotification(completedResult);
 
   useEffect(
     () => () => {

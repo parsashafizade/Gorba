@@ -1,17 +1,5 @@
 import type { ChoiceOption, ScenarioId } from './model';
 
-export const scenarioRoutes: Record<ScenarioId, string> = {
-  raise: '/raise',
-  hire: '/hire',
-  date: '/date',
-};
-
-export const scenarioFromPath = (pathname: string): ScenarioId => {
-  if (pathname.startsWith('/hire')) return 'hire';
-  if (pathname.startsWith('/date')) return 'date';
-  return 'raise';
-};
-
 export const secondaryChoices: Record<ScenarioId, ChoiceOption[]> = {
   raise: [
     { id: 'five', emotion: 'emotion.sadSoft', reactionKey: 'raise.reactions.amount5' },

@@ -5,10 +5,10 @@ import { applyDocumentLocale } from '../localization/i18n';
 import i18n from '../localization/i18n';
 import { App } from './App';
 
-const renderApp = (route = '/') =>
+const renderApp = (route = '/', enabledScenarios?: Array<'raise' | 'hire' | 'date'>) =>
   render(
     <MemoryRouter initialEntries={[route]}>
-      <App />
+      <App enabledScenarios={enabledScenarios} />
     </MemoryRouter>,
   );
 
@@ -21,6 +21,7 @@ const advance = async (milliseconds = 2300) => {
 describe('application flows', () => {
   beforeEach(async () => {
     vi.useFakeTimers();
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true }));
     applyDocumentLocale('en');
     await i18n.changeLanguage('en');
   });
@@ -182,5 +183,52 @@ describe('application flows', () => {
     expect(screen.queryByTestId('recipient-bubble')).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Nope' }));
     expect(screen.getByTestId('recipient-bubble')).toHaveTextContent('Budget’s a little tight 😅');
+  });
+
+  it('notifies only after completion and does not duplicate on normal rerenders', async () => {
+    renderApp('/raise');
+    const request = vi.mocked(fetch);
+
+    fireEvent.click(screen.getByRole('button', { name: /Yesss/ }));
+    await advance();
+    fireEvent.click(screen.getByRole('radio', { name: /20%/ }));
+    await advance();
+    expect(request).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole('radio', { name: /Next paycheck/ }));
+    await advance();
+    expect(request).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(String(request.mock.calls[0][1]?.body))).toMatchObject({
+      result: { scenario: 'raise', amount: 'twenty', finalPercentage: 22, timing: 'next' },
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'فارسی' }));
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+    expect(request).toHaveBeenCalledTimes(1);
+  });
+
+  it('hides disabled scenarios from navigation and redirects a disabled direct route', () => {
+    renderApp('/date', ['raise', 'hire']);
+
+    expect(
+      screen.getByText('So... when does my paycheck get a little bigger? 👀'),
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole('option').map((option) => option.getAttribute('value'))).toEqual([
+      'raise',
+      'hire',
+    ]);
+    expect(screen.queryByRole('option', { name: 'Go on a date with me' })).not.toBeInTheDocument();
+  });
+
+  it('uses Raise at the root whenever Raise is enabled', () => {
+    renderApp('/', ['hire', 'raise']);
+    expect(
+      screen.getByText('So... when does my paycheck get a little bigger? 👀'),
+    ).toBeInTheDocument();
+  });
+
+  it('uses the first configured scenario at the root when Raise is disabled', () => {
+    renderApp('/', ['date', 'hire']);
+    expect(screen.getByText('Coffee with me? ☕')).toBeInTheDocument();
   });
 });

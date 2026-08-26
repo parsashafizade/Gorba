@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { scenarioFromPath, scenarioRoutes } from '../config/scenarios';
 import { applyDocumentLocale, type Locale } from '../localization/i18n';
-import { scenarioFromPath, scenarioRoutes } from '../features/experience/scenarioConfig';
 import type { ScenarioId } from '../features/experience/model';
 
-export function AppHeader() {
+export function AppHeader({ enabledScenarios }: { enabledScenarios: readonly ScenarioId[] }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const scenario = scenarioFromPath(location.pathname);
+  const scenario = scenarioFromPath(location.pathname, enabledScenarios);
   const locale = i18n.resolvedLanguage === 'fa' ? 'fa' : 'en';
   const scenarioIcons: Record<ScenarioId, string> = { raise: '💸', hire: '💼', date: '☕' };
 
@@ -31,9 +31,11 @@ export function AppHeader() {
           value={scenario}
           onChange={(event) => navigate(scenarioRoutes[event.target.value as ScenarioId])}
         >
-          <option value="raise">{t('shared.scenarios.raise')}</option>
-          <option value="hire">{t('shared.scenarios.hire')}</option>
-          <option value="date">{t('shared.scenarios.date')}</option>
+          {enabledScenarios.map((enabledScenario) => (
+            <option key={enabledScenario} value={enabledScenario}>
+              {t(`shared.scenarios.${enabledScenario}`)}
+            </option>
+          ))}
         </select>
         <span className="selector-chevron" aria-hidden="true">
           ⌄
