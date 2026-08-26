@@ -22,8 +22,7 @@ export const resources = {
 
         ask: {
           title: 'So... when does my paycheck get a little bigger? 👀',
-          subtitle:
-            'Nothing wild. Just enough that checking my balance stops being a jump scare.',
+          subtitle: 'Nothing wild. Just enough that checking my balance stops being a jump scare.',
         },
 
         amount: {
@@ -86,6 +85,16 @@ export const resources = {
           speech: 'Justice, but make it cute 😌',
         },
 
+        recipient: {
+          label: 'Boss',
+          no1: 'Budget’s a little tight 😅',
+          no2: 'Maybe next payroll?',
+          no3: 'Finance said not yet',
+          no4: 'One more tiny meeting?',
+          no5: 'We should check with Finance',
+          noLate: 'Let’s add it to the next agenda',
+        },
+
         reactions: {
           no1: 'Even a tiny raise? 🥺',
           no2: 'My payslip is shivering 😭',
@@ -116,8 +125,7 @@ export const resources = {
         role: {
           eyebrow: 'Now for the important part',
           title: 'What exactly did you hire me as? 😌',
-          subtitle:
-            'I’ll take any of these. Team Lead may cause excessive kitten celebration.',
+          subtitle: 'I’ll take any of these. Team Lead may cause excessive kitten celebration.',
 
           options: {
             member: {
@@ -164,6 +172,16 @@ export const resources = {
           offerLabel: 'The offer situation',
           upgrade: 'with suspiciously early promotion potential ✨',
           speech: 'I’ll start Monday-ish 😎',
+        },
+
+        recipient: {
+          label: 'Hiring team',
+          no1: 'No open seats right now 😅',
+          no2: 'HR added one tiny round',
+          no3: 'We still need a reference',
+          no4: 'All the window desks are taken',
+          no5: 'The team budget just closed',
+          noLate: 'HR said to wait a little',
         },
 
         reactions: {
@@ -245,6 +263,16 @@ export const resources = {
           speech: 'No refunds, only dessert 😌❤️',
         },
 
+        recipient: {
+          label: 'Them',
+          no1: 'This week is a little packed 😅',
+          no2: 'I don’t really drink coffee',
+          no3: 'Let me think for a tiny bit',
+          no4: 'I don’t know where we’d go',
+          no5: 'Maybe this week won’t work',
+          noLate: 'Can I check my calendar?',
+        },
+
         reactions: {
           no1: 'Not even tiny coffee? 🥺',
           no2: 'I already picked a mug 😭',
@@ -291,8 +319,7 @@ export const resources = {
 
         ask: {
           title: 'خب... حقوق من کی قراره یه کم قد بکشه؟ 👀',
-          subtitle:
-            'چیز زیادی نمی‌خوام؛ فقط در حدی که آخر ماه از دیدن موجودی حسابم نپرم.',
+          subtitle: 'چیز زیادی نمی‌خوام؛ فقط در حدی که آخر ماه از دیدن موجودی حسابم نپرم.',
         },
 
         amount: {
@@ -353,6 +380,16 @@ export const resources = {
           timingLabel: 'از کی شروع می‌شه؟',
           mischief: 'یه کم بیشترش کردیم؛ مالی لازم نیست همه‌چی رو بدونه. 👀',
           speech: 'عدالت برقرار شد 😌',
+        },
+
+        recipient: {
+          label: 'مدیر',
+          no1: 'بودجه‌مون یه کم تنگه 😅',
+          no2: 'فیش بعدی رو ببینیم شاید',
+          no3: 'مالی گفته فعلاً نه',
+          no4: 'یه جلسه کوچولوی دیگه لازمه',
+          no5: 'باید با مالی هماهنگ کنیم',
+          noLate: 'بذار جلسه بعد حرف بزنیم',
         },
 
         reactions: {
@@ -434,6 +471,16 @@ export const resources = {
           speech: 'شنبه‌طور شروع می‌کنم 😎',
         },
 
+        recipient: {
+          label: 'تیم جذب',
+          no1: 'فعلاً جای خالی نداریم 😅',
+          no2: 'HR میگه یه مرحله دیگه مونده',
+          no3: 'هنوز یه معرف هم می‌خوایم',
+          no4: 'میز کنار پنجره خالی نیست',
+          no5: 'بودجه تیم تازه بسته شده',
+          noLate: 'HR گفته یه کم صبر کنیم',
+        },
+
         reactions: {
           no1: 'ولی رزومه‌م برق می‌زنه 🥺',
           no2: 'یه مصاحبه کوچولو؟ 😭',
@@ -459,8 +506,7 @@ export const resources = {
 
         ask: {
           title: 'یه قهوه با من میای؟ ☕',
-          subtitle:
-            'قرار پیچیده‌ای نیست؛ من، تو، یه قهوه... و این گربه که زیادی هیجان‌زده‌ست.',
+          subtitle: 'قرار پیچیده‌ای نیست؛ من، تو، یه قهوه... و این گربه که زیادی هیجان‌زده‌ست.',
         },
 
         vibe: {
@@ -511,6 +557,16 @@ export const resources = {
           title: 'خب... پس واقعاً داریم می‌ریم 😭❤️',
           statement: 'من از الان دارم فکر می‌کنم چی بپوشم.',
           speech: 'پس گرفتنی نیست؛ فقط دسر 😌❤️',
+        },
+
+        recipient: {
+          label: 'اون طرف',
+          no1: 'این هفته یه کم شلوغم 😅',
+          no2: 'راستش من قهوه نمی‌خورم',
+          no3: 'بذار یه کوچولو فکر کنم',
+          no4: 'نمی‌دونم کجا بریم',
+          no5: 'شاید این هفته نشه',
+          noLate: 'بذار تقویمم رو چک کنم',
         },
 
         reactions: {

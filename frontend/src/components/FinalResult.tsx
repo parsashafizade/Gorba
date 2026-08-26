@@ -105,10 +105,10 @@ function ResultFrame({
       <span className="result-seal">{seal}</span>
       <h1>{title}</h1>
       {children}
-      <div className="result-sparkles" aria-hidden="true">
-        <span>✦</span>
-        <span>♡</span>
-        <span>✧</span>
+      <div className="result-charms" aria-hidden="true">
+        <span>{scenario === 'raise' ? '$' : scenario === 'hire' ? '★' : '♡'}</span>
+        <span>{scenario === 'raise' ? '+%' : scenario === 'hire' ? '✓' : '☕'}</span>
+        <span>{scenario === 'raise' ? '¢' : scenario === 'hire' ? 'CV' : '❀'}</span>
       </div>
     </motion.section>
   );

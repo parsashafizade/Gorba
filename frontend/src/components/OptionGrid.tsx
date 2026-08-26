@@ -8,6 +8,7 @@ type OptionGridProps = {
   selected?: string;
   onSelect: (option: ChoiceOption) => void;
   variant?: 'default' | 'vibe';
+  disabled?: boolean;
 };
 
 export function OptionGrid({
@@ -16,6 +17,7 @@ export function OptionGrid({
   selected,
   onSelect,
   variant = 'default',
+  disabled = false,
 }: OptionGridProps) {
   const { t } = useTranslation();
   return (
@@ -28,11 +30,11 @@ export function OptionGrid({
           aria-checked={selected === option.id}
           className={`choice-card ${selected === option.id ? 'is-selected' : ''}`}
           onClick={() => onSelect(option)}
+          disabled={disabled}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.045, duration: 0.22 }}
           whileHover={{ y: -3 }}
-          whileTap={{ scale: 0.98 }}
         >
           {option.icon && (
             <span className="choice-icon" aria-hidden="true">

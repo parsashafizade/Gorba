@@ -10,6 +10,7 @@ export function AppHeader() {
   const location = useLocation();
   const scenario = scenarioFromPath(location.pathname);
   const locale = i18n.resolvedLanguage === 'fa' ? 'fa' : 'en';
+  const scenarioIcons: Record<ScenarioId, string> = { raise: '💸', hire: '💼', date: '☕' };
 
   const switchLocale = (next: Locale) => {
     applyDocumentLocale(next);
@@ -20,7 +21,7 @@ export function AppHeader() {
     <header className="app-header">
       <div className="selector-shell scenario-selector">
         <span className="selector-icon" aria-hidden="true">
-          ✦
+          {scenarioIcons[scenario]}
         </span>
         <label className="sr-only" htmlFor="scenario-select">
           {t('shared.scenario')}

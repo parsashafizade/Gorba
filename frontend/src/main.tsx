@@ -1,5 +1,8 @@
 import '@fontsource-variable/fredoka';
 import '@fontsource-variable/estedad';
+import '@fontsource-variable/nunito';
+import '@fontsource-variable/vazirmatn';
+import '@fontsource/lalezar';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';

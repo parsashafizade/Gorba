@@ -1,6 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   alignmentByAsset,
   allMascotAssetUrls,
@@ -67,12 +66,15 @@ function MascotStage({ assetKey }: { assetKey: MascotAssetKey }) {
   const duration = assetKey.startsWith('gaze.')
     ? mascotBehavior.crossfade.gaze
     : mascotBehavior.crossfade.emotion;
+  const movementTransition = assetKey.startsWith('gaze.')
+    ? mascotBehavior.movement.gaze
+    : mascotBehavior.movement.emotion;
 
   return (
     <motion.div
       className="mascot-stage"
       animate={microMotion}
-      transition={reducedMotion ? { duration: 0.08 } : { type: 'spring', ...mascotBehavior.spring }}
+      transition={reducedMotion ? { duration: 0.05 } : movementTransition}
       data-testid="mascot-stage"
       data-asset={assetKey}
     >
@@ -97,18 +99,25 @@ function MascotStage({ assetKey }: { assetKey: MascotAssetKey }) {
 type MascotProps = {
   emotion: MascotAssetKey;
   reaction?: string | null;
+  recipientMessage?: string | null;
+  recipientLabel?: string | null;
   trackingEnabled: boolean;
   companion?: boolean;
 };
 
-export function Mascot({ emotion, reaction, trackingEnabled, companion = false }: MascotProps) {
-  const { t } = useTranslation();
+export function Mascot({
+  emotion,
+  reaction,
+  recipientMessage,
+  recipientLabel,
+  trackingEnabled,
+  companion = false,
+}: MascotProps) {
   const stageHostRef = useRef<HTMLDivElement>(null);
   const gazeRef = useRef<MascotAssetKey>('gaze.center');
   const rafRef = useRef<number | null>(null);
   const [gaze, setGaze] = useState<MascotAssetKey>('gaze.center');
   const [temporary, setTemporary] = useState<MascotAssetKey | null>(null);
-  const [showHint, setShowHint] = useState(false);
   const requestedAsset = trackingEnabled ? (temporary ?? gaze) : emotion;
 
   useEffect(() => {
@@ -156,36 +165,33 @@ export function Mascot({ emotion, reaction, trackingEnabled, companion = false }
 
   useEffect(() => {
     if (!trackingEnabled) return;
-    let sequenceTimer: number | undefined;
-    const delay = mascotBehavior.blink.minimumDelay + Math.random() * mascotBehavior.blink.variance;
-    const timer = window.setTimeout(() => {
-      setTemporary('micro.blinkHalf');
-      sequenceTimer = window.setTimeout(() => {
-        setTemporary('micro.blinkClosed');
-        sequenceTimer = window.setTimeout(() => {
-          setTemporary('micro.blinkHalf');
-          sequenceTimer = window.setTimeout(() => setTemporary(null), mascotBehavior.blink.halfMs);
-        }, mascotBehavior.blink.closedMs);
-      }, mascotBehavior.blink.halfMs);
-    }, delay);
+    const timers = new Set<number>();
+    const schedule = () => {
+      const delay =
+        mascotBehavior.blink.minimumDelay + Math.random() * mascotBehavior.blink.variance;
+      const timer = window.setTimeout(() => {
+        setTemporary('micro.blinkHalf');
+        const halfTimer = window.setTimeout(() => {
+          setTemporary('micro.blinkClosed');
+          const closedTimer = window.setTimeout(() => {
+            setTemporary('micro.blinkHalf');
+            const finishTimer = window.setTimeout(() => {
+              setTemporary(null);
+              schedule();
+            }, mascotBehavior.blink.halfMs);
+            timers.add(finishTimer);
+          }, mascotBehavior.blink.closedMs);
+          timers.add(closedTimer);
+        }, mascotBehavior.blink.halfMs);
+        timers.add(halfTimer);
+      }, delay);
+      timers.add(timer);
+    };
+    schedule();
 
     return () => {
-      window.clearTimeout(timer);
-      if (sequenceTimer) window.clearTimeout(sequenceTimer);
+      for (const timer of timers) window.clearTimeout(timer);
     };
-  }, [trackingEnabled, gaze]);
-
-  useEffect(() => {
-    if (!trackingEnabled) return;
-    const timer = window.setTimeout(() => {
-      setTemporary('action.pointDown');
-      setShowHint(true);
-      window.setTimeout(() => {
-        setTemporary(null);
-        setShowHint(false);
-      }, 1500);
-    }, mascotBehavior.idleHintDelay);
-    return () => window.clearTimeout(timer);
   }, [trackingEnabled]);
 
   return (
@@ -196,21 +202,41 @@ export function Mascot({ emotion, reaction, trackingEnabled, companion = false }
       aria-label="Bee-costume kitten mascot"
     >
       <MascotStage assetKey={requestedAsset} />
-      <AnimatePresence mode="wait">
-        {(reaction || (trackingEnabled && showHint)) && (
-          <motion.div
-            key={reaction ?? 'idle-hint'}
-            className="reaction-bubble"
-            role="status"
-            initial={{ opacity: 0, y: 7, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -4, scale: 0.96 }}
-            transition={{ duration: 0.18 }}
-          >
-            {reaction ?? t('shared.answerHint')}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="dialogue-layer">
+        <AnimatePresence mode="wait">
+          {recipientMessage && (
+            <motion.div
+              key="recipient-bubble"
+              className="recipient-bubble"
+              role="status"
+              data-testid="recipient-bubble"
+              initial={{ opacity: 0, x: -8, rotate: -2 }}
+              animate={{ opacity: 1, x: 0, rotate: -1 }}
+              exit={{ opacity: 0, x: -5 }}
+              transition={{ duration: 0.18 }}
+            >
+              {recipientLabel && <small>{recipientLabel}</small>}
+              <span>{recipientMessage}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence mode="wait">
+          {reaction && (
+            <motion.div
+              key="kitten-bubble"
+              className="reaction-bubble"
+              role="status"
+              data-testid="kitten-bubble"
+              initial={{ opacity: 0, y: 7, scale: 0.94 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -4, scale: 0.96 }}
+              transition={{ duration: 0.18 }}
+            >
+              {reaction}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }

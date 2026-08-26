@@ -9,8 +9,9 @@ import { StepProgress } from '../../components/StepProgress';
 import { YesNoChallenge } from '../../components/YesNoChallenge';
 import { Mascot } from '../mascot/Mascot';
 import type { MascotAssetKey } from '../mascot/assets';
+import { interactionBehavior, reactionHoldMs } from './interactionConfig';
 import type { ChoiceOption, ExperienceStep, ScenarioId, ScenarioSelections } from './model';
-import { noEmotionFor, noReactionFor, secondaryChoices, tertiaryChoices } from './scenarioConfig';
+import { noConversationFor, secondaryChoices, tertiaryChoices } from './scenarioConfig';
 
 type ScenarioExperienceProps = { scenario: ScenarioId };
 
@@ -21,43 +22,74 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
   const [noAttempts, setNoAttempts] = useState(0);
   const [emotion, setEmotion] = useState<MascotAssetKey>('gaze.center');
   const [reactionKey, setReactionKey] = useState<string | null>(null);
+  const [recipientKey, setRecipientKey] = useState<string | null>(null);
+  const [recipientLabelKey, setRecipientLabelKey] = useState<string | null>(null);
   const [selections, setSelections] = useState<ScenarioSelections>({});
+  const [isProgressing, setIsProgressing] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const recipientTimerRef = useRef<number | null>(null);
+  const progressingRef = useRef(false);
 
   useEffect(
     () => () => {
       if (timerRef.current) window.clearTimeout(timerRef.current);
+      if (recipientTimerRef.current) window.clearTimeout(recipientTimerRef.current);
     },
     [],
   );
-
-  const later = (callback: () => void, delay = 520) => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(callback, delay);
-  };
 
   const react = (nextEmotion: MascotAssetKey, nextReaction: string) => {
     setEmotion(nextEmotion);
     setReactionKey(nextReaction);
   };
 
+  const beginProgress = (
+    nextEmotion: MascotAssetKey,
+    nextReaction: string,
+    complete: () => void,
+  ) => {
+    if (progressingRef.current) return;
+    progressingRef.current = true;
+    setIsProgressing(true);
+    if (recipientTimerRef.current) window.clearTimeout(recipientTimerRef.current);
+    setRecipientKey(null);
+    setRecipientLabelKey(null);
+    react(nextEmotion, nextReaction);
+    timerRef.current = window.setTimeout(
+      () => {
+        complete();
+        progressingRef.current = false;
+        setIsProgressing(false);
+      },
+      reactionHoldMs(t(nextReaction)),
+    );
+  };
+
   const handleNo = () => {
+    if (progressingRef.current) return;
     const attempt = noAttempts + 1;
+    const conversation = noConversationFor(scenario, attempt);
     setHasInteracted(true);
     setNoAttempts(attempt);
-    react(noEmotionFor(attempt), noReactionFor(scenario, attempt));
+    if (recipientTimerRef.current) window.clearTimeout(recipientTimerRef.current);
+    setRecipientKey(conversation.recipientKey);
+    setRecipientLabelKey(conversation.recipientLabelKey);
+    setReactionKey(null);
+    recipientTimerRef.current = window.setTimeout(() => {
+      react(conversation.emotion, conversation.reactionKey);
+    }, interactionBehavior.reaction.recipientLeadMs);
   };
 
   const handleYes = () => {
     setHasInteracted(true);
-    react('emotion.happySoft', `${scenario}.reactions.yes`);
-    later(() => {
-      setStep(2);
+    beginProgress('emotion.happySoft', `${scenario}.reactions.yes`, () => {
       setReactionKey(null);
+      setStep(2);
     });
   };
 
   const handleSecondaryChoice = (option: ChoiceOption) => {
+    if (progressingRef.current) return;
     if (scenario === 'raise')
       setSelections((current) => ({
         ...current,
@@ -67,14 +99,14 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
       setSelections((current) => ({ ...current, role: option.id as ScenarioSelections['role'] }));
     if (scenario === 'date')
       setSelections((current) => ({ ...current, vibe: option.id as ScenarioSelections['vibe'] }));
-    react(option.emotion, option.reactionKey);
-    later(() => {
-      setStep(3);
+    beginProgress(option.emotion, option.reactionKey, () => {
       setReactionKey(null);
-    }, 620);
+      setStep(3);
+    });
   };
 
   const handleTertiaryChoice = (option: ChoiceOption) => {
+    if (progressingRef.current) return;
     if (scenario === 'raise')
       setSelections((current) => ({
         ...current,
@@ -82,12 +114,11 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
       }));
     if (scenario === 'hire')
       setSelections((current) => ({ ...current, offer: option.id as ScenarioSelections['offer'] }));
-    react(option.emotion, option.reactionKey);
-    later(() => {
+    beginProgress(option.emotion, option.reactionKey, () => {
       setStep(4);
       setEmotion('emotion.happyExcited');
       setReactionKey(`${scenario}.final.speech`);
-    }, 620);
+    });
   };
 
   const setDate = (date: string) => {
@@ -101,10 +132,12 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
   };
 
   const finishDate = () => {
-    if (!selections.date || !selections.time) return;
-    setStep(4);
-    setEmotion('emotion.happyExcited');
-    setReactionKey('date.final.speech');
+    if (!selections.date || !selections.time || progressingRef.current) return;
+    beginProgress('emotion.happyExcited', 'date.reactions.scheduled', () => {
+      setStep(4);
+      setEmotion('emotion.happyExcited');
+      setReactionKey('date.final.speech');
+    });
   };
 
   const isCompanion = hasInteracted || step > 1;
@@ -112,6 +145,8 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
   return (
     <main
       className={`experience experience--${scenario} ${isCompanion ? 'experience--companion' : ''}`}
+      data-step={step}
+      data-progressing={isProgressing}
     >
       <Decorations scenario={scenario} />
       <StepProgress step={step} />
@@ -120,6 +155,8 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
           <Mascot
             emotion={emotion}
             reaction={reactionKey ? t(reactionKey) : null}
+            recipientMessage={recipientKey ? t(recipientKey) : null}
+            recipientLabel={recipientLabelKey ? t(recipientLabelKey) : null}
             trackingEnabled={!hasInteracted && step === 1}
             companion={isCompanion}
           />
@@ -141,7 +178,12 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
                   title={t(`${scenario}.ask.title`)}
                   subtitle={t(`${scenario}.ask.subtitle`)}
                 />
-                <YesNoChallenge noAttempts={noAttempts} onNo={handleNo} onYes={handleYes} />
+                <YesNoChallenge
+                  noAttempts={noAttempts}
+                  onNo={handleNo}
+                  onYes={handleYes}
+                  disabled={isProgressing}
+                />
               </section>
             )}
 
@@ -170,6 +212,7 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
                   }
                   onSelect={handleSecondaryChoice}
                   variant={scenario === 'date' ? 'vibe' : 'default'}
+                  disabled={isProgressing}
                 />
               </section>
             )}
@@ -186,6 +229,7 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
                   translationRoot={`${scenario}.${scenario === 'raise' ? 'timing' : 'offer'}.options`}
                   selected={scenario === 'raise' ? selections.timing : selections.offer}
                   onSelect={handleTertiaryChoice}
+                  disabled={isProgressing}
                 />
               </section>
             )}
@@ -208,6 +252,7 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
                     type="button"
                     className="continue-button"
                     onClick={finishDate}
+                    disabled={isProgressing}
                     initial={{ opacity: 0, y: 7 }}
                     animate={{ opacity: 1, y: 0 }}
                   >

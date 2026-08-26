@@ -12,12 +12,6 @@ export const scenarioFromPath = (pathname: string): ScenarioId => {
   return 'raise';
 };
 
-export const scenarioDecorations: Record<ScenarioId, string[]> = {
-  raise: ['↗', '¢', '☕', '+', '✦', '▤'],
-  hire: ['✦', '★', '⌁', '✓', '▣', '↗'],
-  date: ['♡', '✦', '❀', '☕', '⋆', '♥'],
-};
-
 export const secondaryChoices: Record<ScenarioId, ChoiceOption[]> = {
   raise: [
     { id: 'five', emotion: 'emotion.sadSoft', reactionKey: 'raise.reactions.amount5' },
@@ -68,25 +62,27 @@ export const tertiaryChoices: Record<'raise' | 'hire', ChoiceOption[]> = {
   ],
 };
 
-export const noReactionFor = (scenario: ScenarioId, attempt: number) => {
-  const suffix =
-    attempt === 1
-      ? 'no1'
-      : attempt === 2
-        ? 'no2'
-        : attempt === 3
-          ? 'no3'
-          : attempt === 4
-            ? 'no4'
-            : attempt === 5
-              ? 'no5'
-              : 'noLate';
+const noConversationSequence = [
+  { suffix: 'no1', emotion: 'emotion.sadSoft' },
+  { suffix: 'no2', emotion: 'emotion.sadPleading' },
+  { suffix: 'no3', emotion: 'emotion.sadPleading' },
+  { suffix: 'no4', emotion: 'emotion.sadPleading' },
+  { suffix: 'no5', emotion: 'emotion.angryPouty' },
+  { suffix: 'noLate', emotion: 'emotion.angryPouty' },
+] as const;
 
-  return `${scenario}.reactions.${suffix}`;
+export const noConversationFor = (scenario: ScenarioId, attempt: number) => {
+  const index =
+    (((Math.max(1, attempt) - 1) % noConversationSequence.length) + noConversationSequence.length) %
+    noConversationSequence.length;
+  const item = noConversationSequence[index];
+  return {
+    cycleIndex: index,
+    reactionKey: `${scenario}.reactions.${item.suffix}`,
+    recipientKey: `${scenario}.recipient.${item.suffix}`,
+    recipientLabelKey: `${scenario}.recipient.label`,
+    emotion: item.emotion,
+  } as const;
 };
 
-export const noEmotionFor = (attempt: number) => {
-  if (attempt === 1) return 'emotion.sadSoft' as const;
-  if (attempt <= 4) return 'emotion.sadPleading' as const;
-  return 'emotion.angryPouty' as const;
-};
+export const noConversationLength = noConversationSequence.length;
