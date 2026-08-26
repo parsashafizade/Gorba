@@ -69,12 +69,24 @@ export const tertiaryChoices: Record<'raise' | 'hire', ChoiceOption[]> = {
 };
 
 export const noReactionFor = (scenario: ScenarioId, attempt: number) => {
-  const suffix = attempt === 1 ? 'no1' : attempt === 2 ? 'no2' : attempt === 3 ? 'no3' : 'noLate';
+  const suffix =
+    attempt === 1
+      ? 'no1'
+      : attempt === 2
+        ? 'no2'
+        : attempt === 3
+          ? 'no3'
+          : attempt === 4
+            ? 'no4'
+            : attempt === 5
+              ? 'no5'
+              : 'noLate';
+
   return `${scenario}.reactions.${suffix}`;
 };
 
 export const noEmotionFor = (attempt: number) => {
   if (attempt === 1) return 'emotion.sadSoft' as const;
-  if (attempt <= 3) return 'emotion.sadPleading' as const;
+  if (attempt <= 4) return 'emotion.sadPleading' as const;
   return 'emotion.angryPouty' as const;
 };

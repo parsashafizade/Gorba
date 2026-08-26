@@ -3,326 +3,532 @@ export const resources = {
     translation: {
       shared: {
         brand: 'tiny yes',
-        scenario: 'Pick a mission',
+        scenario: 'What are we asking for?',
         language: 'Language',
-        yes: 'Absolutely',
+        yes: 'Yesss 😌',
         no: 'Nope',
-        continue: 'Make it official',
-        answerHint: 'Your answer’s down there 👀',
+        continue: 'Okay, lock it in',
+        answerHint: 'Your answer’s right down here 👀',
         step: 'Step {{current}} of 4',
         scenarios: {
-          raise: 'Raise my salary',
+          raise: 'Give me a raise',
           hire: 'Hire me',
-          date: 'Coffee date',
+          date: 'Go on a date with me',
         },
       },
+
       raise: {
-        eyebrow: 'A tiny workplace proposal',
+        eyebrow: 'One tiny boss request 😇',
+
         ask: {
-          title: 'My paycheck needs a tiny glow-up.',
-          subtitle: 'Nothing dramatic. Just enough to make the bee-kitten stop checking LinkedIn.',
+          title: 'So... when does my paycheck get a little bigger? 👀',
+          subtitle:
+            'Nothing wild. Just enough that checking my balance stops being a jump scare.',
         },
+
         amount: {
-          eyebrow: 'Excellent managerial instinct',
-          title: 'How legendary are we feeling?',
-          subtitle: 'Pick a raise. The kitten promises to remain extremely normal about it.',
+          eyebrow: 'Okay, now we’re talking',
+          title: 'Alright boss... how happy are we making me? 😌',
+          subtitle: 'I’m not judging your choice. The kitten absolutely is. 👀',
+
           options: {
-            five: { label: '5%', detail: 'A polite little crumb' },
-            ten: { label: '10%', detail: 'Now the calculator is smiling' },
-            twenty: { label: '20%', detail: 'Certified morale booster' },
-            thirty: { label: '30%', detail: 'Finance felt a disturbance' },
+            five: {
+              label: '5%',
+              detail: 'We’re calling this a raise? 🥲',
+            },
+            ten: {
+              label: '10%',
+              detail: 'Okay... we’re getting somewhere',
+            },
+            twenty: {
+              label: '20%',
+              detail: 'Ohhh, now we’re talking',
+            },
+            thirty: {
+              label: '30%',
+              detail: 'Why didn’t you say you’re an angel?',
+            },
           },
         },
+
         timing: {
-          eyebrow: 'One last tiny detail',
-          title: 'When does this masterpiece begin?',
-          subtitle: 'Choose wisely. My grocery cart is listening.',
+          eyebrow: 'Just one thing left',
+          title: 'When does the good news become real?',
+          subtitle: 'No rush. I’m only checking payroll every five minutes. 😌',
+
           options: {
-            next: { label: 'Next paycheck', detail: 'Swift. Elegant. Iconic.' },
-            month: { label: 'This month', detail: 'Calendar-approved kindness' },
-            meeting: { label: 'After one tiny meeting', detail: 'No deck. Two minutes.' },
-            surprise: { label: 'Surprise me', detail: 'Dangerously generous energy' },
+            next: {
+              label: 'Next paycheck',
+              detail: 'You’re my favorite already',
+            },
+            month: {
+              label: 'This month',
+              detail: 'Honestly? Still pretty fast 😌',
+            },
+            meeting: {
+              label: 'After one tiny meeting',
+              detail: 'I promise: no slides',
+            },
+            surprise: {
+              label: 'Surprise me',
+              detail: 'Dangerously attractive option',
+            },
           },
         },
+
         final: {
-          seal: 'UNOFFICIALLY APPROVED',
-          title: 'The paycheck glow-up is happening.',
-          statement: 'Management mysteriously became adorable.',
-          amountLabel: 'Kitten-adjusted raise',
-          timingLabel: 'Starts',
-          mischief: 'We rounded it up. Don’t tell Finance.',
+          seal: 'VERY OFFICIALLY UNOFFICIAL',
+          title: 'So... am I richer now? 😌',
+          statement: 'Witnessed and approved by one very serious bee-kitten.',
+          amountLabel: 'What the kitten approved',
+          timingLabel: 'When it starts',
+          mischief: 'We bumped it up a little. Finance doesn’t need every detail. 👀',
           speech: 'Justice, but make it cute 😌',
         },
+
         reactions: {
           no1: 'Even a tiny raise? 🥺',
           no2: 'My payslip is shivering 😭',
           no3: 'Finance will never know…',
+          no4: 'I asked for one tiny number 😭',
+          no5: 'Fine. I’ll talk to Finance myself 😾',
           noLate: 'Is this a budget meeting? 😾',
+
           yes: 'Capitalism briefly healed 😌',
+
           amount5: 'A snack-sized victory…',
           amount10: 'Respectably less tiny 👀',
           amount20: 'Morale restored! ✨',
           amount30: 'I run Finance now 😎',
+
           timing: 'Calendar: blessed ✅',
         },
       },
+
       hire: {
-        eyebrow: 'A highly unbiased candidate review',
+        eyebrow: 'A completely unbiased application 😇',
+
         ask: {
-          title: 'Your team is missing one suspiciously good hire.',
-          subtitle:
-            'Great skills, excellent vibes, and a bee-kitten who already updated the org chart.',
+          title: 'So... when are you hiring me? 👀',
+          subtitle: 'I’m ready. The kitten already promoted itself to Head of Recruiting.',
         },
+
         role: {
-          eyebrow: 'Taste recognizes talent',
-          title: 'What title are we printing?',
-          subtitle: 'All options include unreasonable amounts of competence.',
+          eyebrow: 'Now for the important part',
+          title: 'What exactly did you hire me as? 😌',
+          subtitle:
+            'I’ll take any of these. Team Lead may cause excessive kitten celebration.',
+
           options: {
-            member: { label: 'Team Member', detail: 'Helpful, brilliant, snack-friendly' },
-            specialist: { label: 'Specialist', detail: 'Knows things. Very mysteriously.' },
-            lead: { label: 'Team Lead', detail: 'Already scheduled the celebration' },
+            member: {
+              label: 'Team Member',
+              detail: 'Starting humble so nobody panics 😇',
+            },
+            specialist: {
+              label: 'Specialist',
+              detail: 'The one who says “leave it with me”',
+            },
+            lead: {
+              label: 'Team Lead',
+              detail: 'I promise not to reorganize everything on day one 😌',
+            },
           },
         },
+
         offer: {
-          eyebrow: 'The important paragraph',
-          title: 'How spicy is the offer?',
-          subtitle: 'No currency needed. We measure compensation in facial expressions.',
+          eyebrow: 'Okay... the fun part',
+          title: 'How happy is this offer about to make me? 💸',
+          subtitle: 'No numbers needed. We’re measuring this by kitten face.',
+
           options: {
-            cute: { label: 'Cute little offer 😅', detail: 'HR found the tiny calculator' },
-            talk: { label: 'Now we’re talking 👀', detail: 'A respectful plot twist' },
-            sign: { label: 'Where do I sign? 🤑', detail: 'Pen already uncapped' },
+            cute: {
+              label: 'A tiny offer 😅',
+              detail: 'Not terrible... not exactly life-changing',
+            },
+            talk: {
+              label: 'Okay, now we’re talking 👀',
+              detail: 'The kitten just sat up straighter',
+            },
+            sign: {
+              label: 'Where do I sign? 🤑',
+              detail: 'Pen’s ready. Point at the line.',
+            },
           },
         },
+
         final: {
-          seal: 'DEFINITELY HIRED',
-          title: 'Welcome to your suspiciously fast promotion.',
-          statement: 'HR can catch up after the welcome cake.',
-          roleLabel: 'New title',
-          offerLabel: 'Offer energy',
-          upgrade: 'with suspiciously fast promotion potential ✨',
+          seal: 'HIRED. NO TAKE-BACKS.',
+          title: 'Well... guess we work together now 😎',
+          statement: 'HR doesn’t know yet, but they’ll catch up.',
+          roleLabel: 'My new job',
+          offerLabel: 'The offer situation',
+          upgrade: 'with suspiciously early promotion potential ✨',
           speech: 'I’ll start Monday-ish 😎',
         },
+
         reactions: {
           no1: 'But the CV has sparkles 🥺',
           no2: 'One tiny interview? 😭',
           no3: 'Ask my references! (me)',
+          no4: 'Not even a desk by the window? 🥺',
+          no5: 'Fine. My résumé is sulking now 😾',
           noLate: 'HR made you do this? 😾',
+
           yes: 'Talent recognized 😌',
+
           member: 'I brought snacks!',
           specialist: 'Finally, accurate labeling ✨',
           lead: 'Updating the org chart 😎',
+
           offerCute: 'My résumé just sighed…',
           offerTalk: 'Professional purring 👀',
           offerSign: 'Onboarding myself now 🤑',
         },
       },
+
       date: {
-        eyebrow: 'A very small romantic proposal',
+        eyebrow: 'One tiny question 😇',
+
         ask: {
-          title: 'Coffee with me? I’ll bring the butterflies.',
-          subtitle: 'Casual, cute, and only 14% chance the bee-kitten becomes our chaperone.',
+          title: 'Coffee with me? ☕',
+          subtitle:
+            'Nothing complicated. You, me, coffee... and one bee-kitten who’s way too invested.',
         },
+
         vibe: {
-          eyebrow: 'This is already adorable',
-          title: 'Pick our little adventure.',
-          subtitle: 'There are no wrong answers. The kitten checked.',
+          eyebrow: 'Okay, so this is happening 😌',
+          title: 'Where should we go?',
+          subtitle: 'Every answer works. I’m just happy you said yes.',
+
           options: {
-            cafe: { label: 'Cozy Café', detail: 'Warm mugs, softer smiles', icon: '☕' },
-            dessert: { label: 'Dessert Date', detail: 'Main character cheesecake', icon: '🍰' },
-            sunset: { label: 'Sunset Spot', detail: 'Golden hour does the flirting', icon: '🌅' },
-            movie: { label: 'Movie', detail: 'Sharing popcorn is legally cute', icon: '🎬' },
-            surprise: { label: 'Surprise Me', detail: 'A tiny leap of faith', icon: '✨' },
+            cafe: {
+              label: 'Cozy Café',
+              detail: 'A cozy corner, two mugs, done.',
+              icon: '☕',
+            },
+            dessert: {
+              label: 'Dessert Date',
+              detail: 'Dessert first. Adulthood later.',
+              icon: '🍰',
+            },
+            sunset: {
+              label: 'Sunset Spot',
+              detail: 'Somewhere pretty, one easy sunset.',
+              icon: '🌅',
+            },
+            movie: {
+              label: 'Movie',
+              detail: 'Good movie. Popcorn negotiations included.',
+              icon: '🎬',
+            },
+            surprise: {
+              label: 'Surprise Me',
+              detail: 'You just show up. I’ll handle the rest.',
+              icon: '✨',
+            },
           },
         },
+
         schedule: {
-          eyebrow: 'The calendar is blushing',
-          title: 'When do we make this cute?',
-          subtitle: 'Choose a day and an hour. The stars will handle the rest.',
-          dateLabel: 'Pick a day',
-          timeLabel: 'Pick an hour',
+          eyebrow: 'Only the timing left',
+          title: 'When are we actually doing this?',
+          subtitle: 'Pick a day and time. I promise I’ll be on time... mostly.',
+          dateLabel: 'Which day?',
+          timeLabel: 'What time?',
           chosen: '{{date}} at {{time}}',
         },
+
         final: {
-          seal: 'IT’S OFFICIALLY A DATE',
-          title: 'Okay, this is ridiculously cute.',
-          statement: 'The calendar has butterflies now.',
+          seal: 'DATE: CONFIRMED ❤️',
+          title: 'Wait... we’re actually doing this 😭❤️',
+          statement: 'I’m already overthinking what to wear.',
           speech: 'No refunds, only dessert 😌❤️',
         },
+
         reactions: {
           no1: 'Not even tiny coffee? 🥺',
           no2: 'I already picked a mug 😭',
           no3: 'My heart wore a bow…',
+          no4: 'I even picked my coffee 🥲',
+          no5: 'Okay, the kitten is taking this personally 😾',
           noLate: 'Playing hard to get? 😾',
+
           yes: 'Knew ittt 😭❤️',
+
           cafe: 'Maximum cozy unlocked ☕',
           dessert: 'Ordering two forks 🍰',
           sunset: 'Rom-com lighting! 🌅',
           movie: 'I call the good seat 🎬',
           surprise: 'Trust level: adorable ✨',
+
           scheduled: 'Saving the date! 💘',
         },
       },
     },
   },
+
   fa: {
     translation: {
       shared: {
-        brand: 'یه بله کوچولو',
-        scenario: 'ماموریت رو انتخاب کن',
+        brand: 'یه «آره» کوچولو',
+        scenario: 'امروز چی می‌خوایم؟',
         language: 'زبان',
-        yes: 'صددرصد آره',
+        yes: 'آرههه 😌',
         no: 'نه',
-        continue: 'رسمیش کنیم',
-        answerHint: 'جوابت اون پایینه 👀',
+        continue: 'خب، قطعی‌ش کنیم',
+        answerHint: 'جوابت همین پایینه 👀',
         step: 'مرحله {{current}} از ۴',
+
         scenarios: {
-          raise: 'حقوقمو زیاد کن',
+          raise: 'حقوقم رو افزایش بده',
           hire: 'منو استخدام کن',
-          date: 'قرار قهوه',
+          date: 'بریم یه قرار',
         },
       },
+
       raise: {
-        eyebrow: 'یک پیشنهاد کوچولوی اداری',
+        eyebrow: 'یه درخواست خیلی کوچولو از رئیس 😇',
+
         ask: {
-          title: 'فکر کنم حقوقم یه کوچولو ناز لازم داره.',
-          subtitle: 'چیز عجیبی نیست؛ فقط در حدی که این گربه زنبوری دیگه لینکدین چک نکنه.',
+          title: 'خب... حقوق من کی قراره یه کم قد بکشه؟ 👀',
+          subtitle:
+            'چیز زیادی نمی‌خوام؛ فقط در حدی که آخر ماه از دیدن موجودی حسابم نپرم.',
         },
+
         amount: {
-          eyebrow: 'شم مدیریتی‌ت حرف نداره',
-          title: 'چقدر افسانه‌ای پیش بریم؟',
-          subtitle: 'درصد رو انتخاب کن؛ گربه قول می‌ده خیلی معمولی رفتار کنه.',
+          eyebrow: 'خب، حالا داریم به جاهای خوبش می‌رسیم',
+          title: 'خب رئیس... چند درصد قراره خوشحالم کنی؟ 😌',
+          subtitle: 'من قضاوتت نمی‌کنم؛ ولی گربه داره خیلی دقیق نگاه می‌کنه. 👀',
+
           options: {
-            five: { label: '۵٪', detail: 'یه خرده‌نان مؤدبانه' },
-            ten: { label: '۱۰٪', detail: 'ماشین‌حساب لبخند زد' },
-            twenty: { label: '۲۰٪', detail: 'تقویت روحیه با مهر رسمی' },
-            thirty: { label: '۳۰٪', detail: 'مالی یه لرزش حس کرد' },
+            five: {
+              label: '۵٪',
+              detail: 'اینو واقعاً افزایش حساب کنیم؟ 🥲',
+            },
+            ten: {
+              label: '۱۰٪',
+              detail: 'باشه... داریم نزدیک می‌شیم',
+            },
+            twenty: {
+              label: '۲۰٪',
+              detail: 'اوه، حالا شد یه چیزی',
+            },
+            thirty: {
+              label: '۳۰٪',
+              detail: 'خب چرا از اول نگفتی فرشته‌ای؟',
+            },
           },
         },
+
         timing: {
-          eyebrow: 'فقط یه جزئیات کوچولو',
-          title: 'این شاهکار از کی شروع می‌شه؟',
-          subtitle: 'با دقت انتخاب کن؛ سبد خریدم گوش وایساده.',
+          eyebrow: 'فقط زمانش مونده',
+          title: 'خب این خبر خوب از کی واقعی می‌شه؟',
+          subtitle: 'عجله ندارم... فقط هر پنج دقیقه فیش حقوقی رو چک می‌کنم. 😌',
+
           options: {
-            next: { label: 'فیش بعدی', detail: 'سریع، شیک، تاریخی' },
-            month: { label: 'همین ماه', detail: 'مهربونیِ مورد تأیید تقویم' },
-            meeting: { label: 'بعد یه جلسه فسقلی', detail: 'بدون اسلاید؛ فقط دو دقیقه' },
-            surprise: { label: 'سورپرایزم کن', detail: 'انرژیِ سخاوتِ خطرناک' },
+            next: {
+              label: 'از فیش بعدی',
+              detail: 'همین الان شدی رئیس موردعلاقه‌م',
+            },
+            month: {
+              label: 'همین ماه',
+              detail: 'باشه، اینم هنوز خیلی خوبه 😌',
+            },
+            meeting: {
+              label: 'بعد یه جلسه کوچولو',
+              detail: 'قول می‌دم پاورپوینت نیارم',
+            },
+            surprise: {
+              label: 'سورپرایزم کن',
+              detail: 'این گزینه زیادی جذابه',
+            },
           },
         },
+
         final: {
-          seal: 'به‌طور کاملاً غیررسمی تأیید شد',
-          title: 'حقوق قراره خوشگل‌تر بشه.',
-          statement: 'مدیریت به شکل مشکوکی مهربون شد.',
-          amountLabel: 'افزایش با اصلاح گربه',
-          timingLabel: 'شروع',
-          mischief: 'یه کم رُندش کردیم بالا؛ به مالی نگو.',
+          seal: 'خیلی رسمیِ غیررسمی تأیید شد',
+          title: 'خب... یعنی الان یه کم پولدارترم؟ 😌',
+          statement: 'این توافق با حضور یک گربه زنبوری کاملاً معتبر اعلام شد.',
+          amountLabel: 'چیزی که گربه تصویب کرد',
+          timingLabel: 'از کی شروع می‌شه؟',
+          mischief: 'یه کم بیشترش کردیم؛ مالی لازم نیست همه‌چی رو بدونه. 👀',
           speech: 'عدالت برقرار شد 😌',
         },
+
         reactions: {
           no1: 'حتی یه کوچولو؟ 🥺',
           no2: 'فیش حقوقم لرزید 😭',
           no3: 'مالی اصلاً نمی‌فهمه…',
+          no4: 'من فقط یه عدد کوچولو خواستم 😭',
+          no5: 'باشه، خودم می‌رم با مالی حرف می‌زنم 😾',
           noLate: 'جلسه بودجه‌ست مگه؟ 😾',
+
           yes: 'سرمایه‌داری یه لحظه خوب شد 😌',
+
           amount5: 'یه پیروزی لقمه‌ای…',
           amount10: 'دیگه خیلی فسقلی نیست 👀',
           amount20: 'روحیه برگشت! ✨',
           amount30: 'مالی از الان دست منه 😎',
+
           timing: 'تقویم: متبرک شد ✅',
         },
       },
+
       hire: {
-        eyebrow: 'ارزیابی کاملاً بی‌طرفانه یک نابغه',
+        eyebrow: 'یه درخواست کاملاً بی‌طرفانه 😇',
+
         ask: {
-          title: 'تیمت یه استخدامِ مشکوکانه خوب کم داره.',
-          subtitle: 'مهارت عالی، وایب عالی، و یه گربه زنبوری که چارت سازمانی رو عوض کرده.',
+          title: 'خب... کی قراره منو استخدام کنی؟ 👀',
+          subtitle: 'من آماده‌م؛ گربه هم بدون اجازه خودش رو مسئول جذب کرده.',
         },
+
         role: {
-          eyebrow: 'استعداد، استعداد رو می‌شناسه',
-          title: 'روی کارت ویزیت چی بنویسیم؟',
-          subtitle: 'همه گزینه‌ها شامل مقادیر غیرمنطقی از توانمندی‌ان.',
+          eyebrow: 'حالا بریم سر اصل مطلب',
+          title: 'منو دقیقاً چی استخدام کردی؟ 😌',
+          subtitle: 'هرکدوم رو بزنی قبوله؛ فقط «رهبر تیم» بزنی گربه تا فردا ذوق داره.',
+
           options: {
-            member: { label: 'عضو تیم', detail: 'کاربلد، بامزه، اهل میان‌وعده' },
-            specialist: { label: 'متخصص', detail: 'یه چیزایی رو خیلی مرموز بلده' },
-            lead: { label: 'رهبر تیم', detail: 'جشن رو هم برنامه‌ریزی کرده' },
+            member: {
+              label: 'عضو تیم',
+              detail: 'آروم شروع می‌کنیم که بقیه نترسن 😇',
+            },
+            specialist: {
+              label: 'متخصص',
+              detail: 'همونی که می‌گه «بسپارش به من»',
+            },
+            lead: {
+              label: 'رهبر تیم',
+              detail: 'قول می‌دم روز اول همه‌چی رو عوض نکنم 😌',
+            },
           },
         },
+
         offer: {
-          eyebrow: 'اون پاراگراف مهمه',
-          title: 'پیشنهاد چقدر هیجان‌انگیزه؟',
-          subtitle: 'واحد پول مهم نیست؛ حقوق رو با قیافه گربه اندازه می‌گیریم.',
+          eyebrow: 'خب... رسیدیم به بخش شیرینش',
+          title: 'پیشنهادت چقدر قراره خوشحالم کنه؟ 💸',
+          subtitle: 'عدد نمی‌خوایم؛ فقط ببینیم گربه لبخند می‌زنه یا نه.',
+
           options: {
-            cute: { label: 'یه پیشنهاد نقلی 😅', detail: 'منابع انسانی ماشین‌حساب کوچیکه رو آورد' },
-            talk: { label: 'حالا شد یه چیزی 👀', detail: 'یه پیچش داستانی محترمانه' },
-            sign: { label: 'کجا رو امضا کنم؟ 🤑', detail: 'خودکار از قبل آماده‌ست' },
+            cute: {
+              label: 'یه پیشنهاد نقلی 😅',
+              detail: 'برای شروع بد نیست... خیلی هم خوب نیست',
+            },
+            talk: {
+              label: 'حالا شد یه چیزی 👀',
+              detail: 'گربه یه کم جدی‌تر نشست',
+            },
+            sign: {
+              label: 'کجا رو امضا کنم؟ 🤑',
+              detail: 'خودکار دستمه؛ بگو کجا',
+            },
           },
         },
+
         final: {
-          seal: 'قطعاً استخدام شد',
-          title: 'به ترفیع مشکوکانه سریعت خوش اومدی.',
-          statement: 'منابع انسانی بعد از کیک خوشامدگویی خبردار می‌شه.',
-          roleLabel: 'عنوان جدید',
-          offerLabel: 'انرژی پیشنهاد',
-          upgrade: 'با پتانسیل ترفیعِ زیادی سریع ✨',
-          speech: 'دوشنبه‌طور شروع می‌کنم 😎',
+          seal: 'استخدام شدی؛ دیگه بحث نکن',
+          title: 'خب... ظاهراً از این به بعد همکاریم 😎',
+          statement: 'منابع انسانی هنوز خبر نداره، ولی بالاخره می‌فهمه.',
+          roleLabel: 'سمت جدید من',
+          offerLabel: 'وضعیت پیشنهاد',
+          upgrade: 'با شانس عجیب‌وغریبِ ترفیع زودهنگام ✨',
+          speech: 'شنبه‌طور شروع می‌کنم 😎',
         },
+
         reactions: {
           no1: 'ولی رزومه‌م برق می‌زنه 🥺',
           no2: 'یه مصاحبه کوچولو؟ 😭',
           no3: 'از معرفم بپرس! (خودمم)',
+          no4: 'حتی یه میز کنار پنجره؟ 🥺',
+          no5: 'باشه، رزومه‌م داره قهر می‌کنه 😾',
           noLate: 'منابع انسانی گفت این کارو کنی؟ 😾',
+
           yes: 'استعداد بالاخره دیده شد 😌',
+
           member: 'میان‌وعده هم آوردم!',
           specialist: 'بالاخره عنوان دقیق ✨',
           lead: 'دارم چارت رو آپدیت می‌کنم 😎',
+
           offerCute: 'رزومه‌م یه آه کشید…',
           offerTalk: 'خُرخُر حرفه‌ای 👀',
           offerSign: 'خودم آنبورد می‌شم 🤑',
         },
       },
+
       date: {
-        eyebrow: 'یک پیشنهاد عاشقانه خیلی کوچولو',
+        eyebrow: 'یه سؤال خیلی کوچولو 😇',
+
         ask: {
-          title: 'با من قهوه می‌خوری؟ پروانه‌هاش با من.',
-          subtitle: 'خودمونی، بامزه، با فقط ۱۴٪ احتمال اینکه گربه زنبوری همراهمون بیاد.',
+          title: 'یه قهوه با من میای؟ ☕',
+          subtitle:
+            'قرار پیچیده‌ای نیست؛ من، تو، یه قهوه... و این گربه که زیادی هیجان‌زده‌ست.',
         },
+
         vibe: {
-          eyebrow: 'از الان خیلی نازه',
-          title: 'ماجراجویی کوچولومون رو انتخاب کن.',
-          subtitle: 'جواب غلط نداریم؛ گربه بررسی کرده.',
+          eyebrow: 'خب، پس داریم می‌ریم 😌',
+          title: 'حالا کجا بریم که خوش بگذره؟',
+          subtitle: 'هرچی انتخاب کنی قبوله؛ من فقط خوشحالم گفتی آره.',
+
           options: {
-            cafe: { label: 'کافه دنج', detail: 'فنجون گرم، لبخند نرم‌تر', icon: '☕' },
-            dessert: { label: 'قرار دسر', detail: 'چیزکیکِ نقش اول داستان', icon: '🍰' },
-            sunset: { label: 'تماشای غروب', detail: 'نور طلایی خودش مخ می‌زنه', icon: '🌅' },
-            movie: { label: 'فیلم', detail: 'پاپ‌کورن مشترک رسماً نازه', icon: '🎬' },
-            surprise: { label: 'سورپرایزم کن', detail: 'یه ذره اعتمادِ بامزه', icon: '✨' },
+            cafe: {
+              label: 'یه کافه دنج',
+              detail: 'یه گوشه دنج، دوتا فنجون، تمام',
+              icon: '☕',
+            },
+            dessert: {
+              label: 'بریم دسر بخوریم',
+              detail: 'اول دسر؛ بعداً آدم‌بزرگ می‌شیم',
+              icon: '🍰',
+            },
+            sunset: {
+              label: 'بریم غروب ببینیم',
+              detail: 'یه جای قشنگ و یه غروب بی‌دردسر',
+              icon: '🌅',
+            },
+            movie: {
+              label: 'بریم فیلم ببینیم',
+              detail: 'فیلم خوب؛ دعوای پاپ‌کورن با من',
+              icon: '🎬',
+            },
+            surprise: {
+              label: 'سورپرایزم کن',
+              detail: 'تو فقط حاضر شو؛ بقیه‌ش با من',
+              icon: '✨',
+            },
           },
         },
+
         schedule: {
-          eyebrow: 'تقویم داره سرخ می‌شه',
-          title: 'کی این لحظه ناز رو بسازیم؟',
-          subtitle: 'روز و ساعت رو انتخاب کن؛ بقیه‌ش با ستاره‌ها.',
-          dateLabel: 'روز رو انتخاب کن',
-          timeLabel: 'ساعت رو انتخاب کن',
+          eyebrow: 'فقط زمانش مونده',
+          title: 'کی بریم که این قرار واقعاً اتفاق بیفته؟',
+          subtitle: 'یه روز و ساعت انتخاب کن؛ قول می‌دم دیر نرسم... خیلی.',
+          dateLabel: 'کِی؟',
+          timeLabel: 'چه ساعتی؟',
           chosen: '{{date}} ساعت {{time}}',
         },
+
         final: {
-          seal: 'رسماً یه قراره',
-          title: 'خب، این دیگه زیادی نازه.',
-          statement: 'تقویم هم الان توی دلش پروانه داره.',
+          seal: 'قرار قطعی شد ❤️',
+          title: 'خب... پس واقعاً داریم می‌ریم 😭❤️',
+          statement: 'من از الان دارم فکر می‌کنم چی بپوشم.',
           speech: 'پس گرفتنی نیست؛ فقط دسر 😌❤️',
         },
+
         reactions: {
           no1: 'حتی یه قهوه فسقلی؟ 🥺',
           no2: 'ماگمم انتخاب کرده بودم 😭',
           no3: 'قلبم پاپیون زده بود…',
+          no4: 'من حتی قهوه‌مم انتخاب کرده بودم 🥲',
+          no5: 'باشه، گربه داره شخصی می‌گیره 😾',
           noLate: 'داری ناز می‌کنی؟ 😾',
+
           yes: 'می‌دونستممم 😭❤️',
+
           cafe: 'حداکثر دنجی فعال شد ☕',
           dessert: 'دو تا چنگال می‌گیرم 🍰',
           sunset: 'نورِ فیلم عاشقانه! 🌅',
           movie: 'صندلی خوبه مال من 🎬',
           surprise: 'سطح اعتماد: بامزه ✨',
+
           scheduled: 'تاریخ ذخیره شد! 💘',
         },
       },
