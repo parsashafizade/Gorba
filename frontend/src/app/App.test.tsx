@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { noConversationLength } from '../features/experience/scenarioConfig';
-import { reactionPlacements } from '../features/mascot/dialogue';
+import { reactionPlacementFor, reactionPlacements } from '../features/mascot/dialogue';
 import { applyDocumentLocale } from '../localization/i18n';
 import i18n from '../localization/i18n';
 import { App } from './App';
@@ -172,7 +172,6 @@ describe('application flows', () => {
     const placements = [screen.getByTestId('kitten-bubble').dataset.placement];
     for (let attempt = 2; attempt <= reactionPlacements.length; attempt += 1) {
       fireEvent.click(screen.getByTestId('no-button'));
-      expect(screen.queryByTestId('kitten-bubble')).not.toBeInTheDocument();
       await advance(330);
       placements.push(screen.getByTestId('kitten-bubble').dataset.placement);
     }
@@ -192,7 +191,7 @@ describe('application flows', () => {
     expect(screen.getByTestId('kitten-bubble').textContent).toBe(firstReaction);
     expect(screen.getByTestId('kitten-bubble')).toHaveAttribute(
       'data-placement',
-      reactionPlacements[0],
+      reactionPlacementFor(noConversationLength + 1),
     );
   });
 

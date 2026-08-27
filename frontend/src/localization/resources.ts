@@ -2,7 +2,6 @@ export const resources = {
   en: {
     translation: {
       shared: {
-        brand: 'tiny yes',
         scenario: 'Pick your mission',
         language: 'Language',
         kitten: 'Kitten',
@@ -15,11 +14,10 @@ export const resources = {
         yes: 'Yes, deal 😌',
         no: 'Not yet',
         continue: 'That’s the one',
-        answerHint: 'Your answer is down here',
         step: 'Step {{current}} of 4',
         scenarios: {
-          raise: 'Ask for a raise',
-          hire: 'Get me hired',
+          raise: 'Get a raise',
+          hire: 'Hire me',
           date: 'Plan a date',
         },
       },
@@ -230,7 +228,7 @@ export const resources = {
           no5: 'Great. We can take turns.',
           noLate: 'Take your time. I’m practicing patience.',
           yes: 'Okay. Nobody panic.',
-          cafe: 'Good. I know a table.',
+          cafe: 'Good. I already have a place in mind.',
           dessert: 'I respect this decision.',
           sunset: 'I’ll check the weather seventeen times.',
           movie: 'I’ll share the popcorn. Probably.',
@@ -244,7 +242,6 @@ export const resources = {
   fa: {
     translation: {
       shared: {
-        brand: 'یه آره کوچولو',
         scenario: 'امروز کدوم مأموریت؟',
         language: 'زبان',
         kitten: 'گربه',
@@ -257,11 +254,10 @@ export const resources = {
         yes: 'آره، قبوله 😌',
         no: 'فعلاً نه',
         continue: 'همینه، قطعی‌ش کن',
-        answerHint: 'جوابت همین پایینه',
         step: 'مرحله {{current}} از ۴',
         scenarios: {
           raise: 'افزایش حقوق',
-          hire: 'منو استخدام کن',
+          hire: 'استخدامم کن',
           date: 'قرار دونفره',
         },
       },
@@ -472,7 +468,7 @@ export const resources = {
           no5: 'خوبه؛ نوبتی معذب می‌شیم.',
           noLate: 'راحت باش؛ من دارم صبرکردن تمرین می‌کنم.',
           yes: 'باشه. من خیلی خونسردم.',
-          cafe: 'خوبه؛ یه میز خوب سراغ دارم.',
+          cafe: 'خوبه؛ یه جای خوب سراغ دارم.',
           dessert: 'این تصمیم کاملاً محترمه.',
           sunset: 'هوا رو فقط هفده بار چک می‌کنم.',
           movie: 'پاپ‌کورن رو تقسیم می‌کنم. احتمالاً.',

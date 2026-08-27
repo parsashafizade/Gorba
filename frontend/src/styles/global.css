@@ -2022,6 +2022,7 @@ html[lang='fa'] .sticker-stamp {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 
   .decorations {
@@ -2033,6 +2034,10 @@ html[lang='fa'] .sticker-stamp {
 body {
   min-height: 100svh;
   background: #f5c45e;
+}
+
+.app-shell {
+  min-height: 100svh;
 }
 
 .app-header[data-scenario='raise'] {
@@ -2133,6 +2138,18 @@ body {
     radial-gradient(ellipse 45% 40% at 92% 84%, rgb(158 139 225 / 48%) 0 48%, transparent 49%),
     repeating-linear-gradient(116deg, transparent 0 21px, rgb(94 47 65 / 2.7%) 22px 23px),
     linear-gradient(145deg, #f2b0b4 0%, #eda0ae 54%, #e891a6 100%);
+}
+
+.experience:not(.experience--hire) .answer-button--yes,
+.experience--date .continue-button,
+.experience--date .date-rail button.is-selected,
+.experience--date .time-rail button.is-selected {
+  color: var(--ink);
+}
+
+.experience--date .date-rail button.is-selected small,
+.experience--date .date-rail button.is-selected span {
+  color: color-mix(in srgb, var(--ink) 78%, transparent);
 }
 
 .experience::before {
@@ -2372,11 +2389,6 @@ body {
   right: 6%;
   bottom: 17%;
   transform: rotate(5deg);
-}
-
-.result-card--raise .result-ornaments,
-.result-card--hire .result-ornaments {
-  display: none;
 }
 
 .raise-certificate__topline,
@@ -2678,12 +2690,6 @@ html[lang='fa'] .hire-pass__fields strong {
   );
 }
 
-.result-card--hire .result-ornaments span {
-  border-color: rgb(255 255 255 / 70%);
-  color: #292644;
-  background: #f3d465;
-}
-
 .result-card--date {
   min-height: 560px;
   text-align: center;
@@ -2903,6 +2909,8 @@ html[lang='fa'] .date-keepsake__activity strong {
     align-items: flex-start;
     gap: 8px;
     padding: calc(8px + env(safe-area-inset-top)) 8px 10px;
+    padding-right: max(8px, env(safe-area-inset-right));
+    padding-left: max(8px, env(safe-area-inset-left));
   }
 
   .selector-shell {
@@ -2919,7 +2927,7 @@ html[lang='fa'] .date-keepsake__activity strong {
   .selector-shell select {
     min-width: 0;
     padding-inline: 0 24px;
-    font-size: clamp(0.7rem, 3vw, 0.8rem);
+    font-size: 1rem;
     text-overflow: ellipsis;
   }
 
@@ -2939,13 +2947,15 @@ html[lang='fa'] .date-keepsake__activity strong {
     min-width: 44px;
     min-height: 44px;
     padding: 0 6px;
-    font-size: clamp(0.66rem, 2.4vw, 0.7rem);
+    font-size: 0.75rem;
   }
 
   .experience {
     min-height: 100svh;
     padding: calc(var(--header-height) + env(safe-area-inset-top) + 10px) 12px
       calc(24px + env(safe-area-inset-bottom));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-left: max(12px, env(safe-area-inset-left));
     overflow-x: clip;
     overflow-y: visible;
   }
@@ -3018,7 +3028,7 @@ html[lang='fa'] .date-keepsake__activity strong {
   .reaction-bubble,
   .recipient-bubble {
     max-width: min(146px, 43vw);
-    font-size: clamp(0.72rem, 3vw, 0.8rem);
+    font-size: clamp(0.75rem, 3vw, 0.82rem);
     line-height: 1.32;
   }
 
@@ -3504,7 +3514,8 @@ html[lang='fa'] .date-keepsake__activity strong {
 @media (max-width: 360px) {
   .app-header {
     gap: 6px;
-    padding-inline: 6px;
+    padding-right: max(6px, env(safe-area-inset-right));
+    padding-left: max(6px, env(safe-area-inset-left));
   }
 
   .selector-shell {
@@ -3518,11 +3529,12 @@ html[lang='fa'] .date-keepsake__activity strong {
   .language-selector button {
     min-width: 44px;
     padding-inline: 4px;
-    font-size: 0.64rem;
+    font-size: 0.7rem;
   }
 
   .experience {
-    padding-inline: 9px;
+    padding-right: max(9px, env(safe-area-inset-right));
+    padding-left: max(9px, env(safe-area-inset-left));
   }
 
   .experience--companion .mascot-column {
@@ -3536,7 +3548,7 @@ html[lang='fa'] .date-keepsake__activity strong {
   .reaction-bubble,
   .recipient-bubble {
     max-width: 132px;
-    font-size: 0.71rem;
+    font-size: 0.74rem;
   }
 
   .recipient-bubble {

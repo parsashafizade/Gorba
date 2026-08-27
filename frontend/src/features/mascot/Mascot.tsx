@@ -121,6 +121,7 @@ export function Mascot({
   companion = false,
 }: MascotProps) {
   const { t, i18n } = useTranslation();
+  const reducedMotion = useReducedMotion();
   const stageHostRef = useRef<HTMLDivElement>(null);
   const gazeRef = useRef<MascotAssetKey>('gaze.center');
   const rafRef = useRef<number | null>(null);
@@ -207,7 +208,7 @@ export function Mascot({
   return (
     <motion.div
       ref={stageHostRef}
-      layout
+      layout={!reducedMotion}
       className={`mascot ${companion ? 'mascot--companion' : ''}`}
       aria-label={t('shared.mascotLabel')}
       data-scenario={scenario}
@@ -221,10 +222,18 @@ export function Mascot({
               className="recipient-bubble"
               role="status"
               data-testid="recipient-bubble"
-              initial={{ opacity: 0, x: recipientInitialX, scale: 0.93 }}
+              initial={reducedMotion ? false : { opacity: 0, x: recipientInitialX, scale: 0.93 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: recipientInitialX * 0.4, scale: 0.96 }}
-              transition={{ type: 'spring', stiffness: 390, damping: 27, mass: 0.7 }}
+              exit={
+                reducedMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, x: recipientInitialX * 0.4, scale: 0.96 }
+              }
+              transition={
+                reducedMotion
+                  ? { duration: 0.01 }
+                  : { type: 'spring', stiffness: 390, damping: 27, mass: 0.7 }
+              }
             >
               <span className="recipient-bubble__avatar" aria-hidden="true">
                 {recipientLabel?.slice(0, 1)}
@@ -244,15 +253,23 @@ export function Mascot({
               role="status"
               data-testid="kitten-bubble"
               data-placement={placement}
-              initial={{
-                opacity: 0,
-                y: 8,
-                scale: 0.92,
-                rotate: placement.includes('left') ? -1 : 1,
-              }}
+              initial={
+                reducedMotion
+                  ? false
+                  : {
+                      opacity: 0,
+                      y: 8,
+                      scale: 0.92,
+                      rotate: placement.includes('left') ? -1 : 1,
+                    }
+              }
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -4, scale: 0.96 }}
-              transition={{ type: 'spring', stiffness: 410, damping: 27, mass: 0.68 }}
+              exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.96 }}
+              transition={
+                reducedMotion
+                  ? { duration: 0.01 }
+                  : { type: 'spring', stiffness: 410, damping: 27, mass: 0.68 }
+              }
             >
               <small>{t('shared.kitten')}</small>
               <span>{reaction}</span>

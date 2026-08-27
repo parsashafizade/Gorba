@@ -65,7 +65,7 @@ function StickerArt({ kind }: { kind: string }) {
     return (
       <div className="sticker-mug">
         <i />
-        <b>{kind === 'coffee' ? '♡' : '☕'}</b>
+        <b>{kind === 'coffee' ? '✦' : '☕'}</b>
       </div>
     );
   if (kind === 'percent') return <div className="sticker-tag">+%</div>;
@@ -104,7 +104,7 @@ function StickerArt({ kind }: { kind: string }) {
     return (
       <div className="sticker-cake">
         <i />
-        <b>♡</b>
+        <b>•</b>
       </div>
     );
   if (kind === 'ticket')
@@ -118,7 +118,7 @@ function StickerArt({ kind }: { kind: string }) {
     return (
       <div className="sticker-polaroid">
         <i />
-        <b>♡</b>
+        <b>✦</b>
       </div>
     );
   return (

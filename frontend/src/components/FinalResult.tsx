@@ -21,7 +21,7 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
       <ResultMotion scenario="raise">
         <div className="raise-certificate__topline">
           <span className="result-seal">{t('raise.final.seal')}</span>
-          <span className="raise-certificate__stamp" aria-hidden="true">
+          <span className="raise-certificate__stamp" dir="ltr" aria-hidden="true">
             +{adjustment}
           </span>
         </div>
@@ -29,21 +29,23 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
 
         <div className="raise-certificate__hero">
           <span className="raise-certificate__label">{t('raise.final.amountLabel')}</span>
-          <strong>{new Intl.NumberFormat(locale).format(result.finalPercentage)}%</strong>
+          <strong dir="ltr">
+            {new Intl.NumberFormat(locale).format(result.finalPercentage)}%
+          </strong>
           <div className="raise-certificate__scribble" aria-hidden="true" />
         </div>
 
         <div className="raise-certificate__details">
           <div>
             <span>{t('raise.final.selectedLabel')}</span>
-            <strong>{new Intl.NumberFormat(locale).format(selected)}%</strong>
+            <strong dir="ltr">{new Intl.NumberFormat(locale).format(selected)}%</strong>
           </div>
           <div className="raise-certificate__plus" aria-hidden="true">
             +
           </div>
           <div>
             <span>{t('raise.final.adjustmentLabel')}</span>
-            <strong>+{new Intl.NumberFormat(locale).format(adjustment)}%</strong>
+            <strong dir="ltr">+{new Intl.NumberFormat(locale).format(adjustment)}%</strong>
           </div>
           <div className="raise-certificate__timing">
             <span>{t('raise.final.timingLabel')}</span>
@@ -53,7 +55,6 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
 
         <p className="result-statement">{t('raise.final.statement')}</p>
         <span className="mischief-note">✎ {t('raise.final.mischief')}</span>
-        <ResultOrnaments scenario="raise" />
       </ResultMotion>
     );
   }
@@ -97,7 +98,6 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
           <span>{t('hire.final.upgrade')}</span>
           <i aria-hidden="true" />
         </div>
-        <ResultOrnaments scenario="hire" />
       </ResultMotion>
     );
   }
@@ -157,7 +157,7 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
 
         <p className="result-statement">{t('date.final.statement')}</p>
         <span className="date-keepsake__note">{t('date.final.ticketNote')}</span>
-        <ResultOrnaments scenario="date" />
+        <DateOrnaments />
       </ResultMotion>
     );
   }
@@ -183,12 +183,12 @@ function ResultMotion({ scenario, children }: { scenario: ScenarioId; children: 
   );
 }
 
-function ResultOrnaments({ scenario }: { scenario: ScenarioId }) {
+function DateOrnaments() {
   return (
     <div className="result-ornaments" aria-hidden="true">
-      <span>{scenario === 'raise' ? '$' : scenario === 'hire' ? '✓' : '☕'}</span>
-      <span>{scenario === 'raise' ? '+%' : scenario === 'hire' ? 'CV' : '✦'}</span>
-      <span>{scenario === 'raise' ? '↗' : scenario === 'hire' ? '★' : '♡'}</span>
+      <span>☕</span>
+      <span>✦</span>
+      <span>○</span>
     </div>
   );
 }

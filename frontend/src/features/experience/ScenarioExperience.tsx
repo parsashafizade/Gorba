@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { buildCompletedResult } from '../../../../shared/results';
@@ -19,6 +19,7 @@ type ScenarioExperienceProps = { scenario: ScenarioId };
 
 export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
   const { t } = useTranslation();
+  const reducedMotion = useReducedMotion();
   const [step, setStep] = useState<ExperienceStep>(1);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [noAttempts, setNoAttempts] = useState(0);
@@ -176,10 +177,10 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
           <motion.div
             className="content-column"
             key={step}
-            initial={{ opacity: 0, y: 13 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 13 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.22 }}
+            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+            transition={{ duration: reducedMotion ? 0.01 : 0.22 }}
           >
             {step === 1 && (
               <section className="ask-step">
@@ -213,6 +214,9 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
                 <OptionGrid
                   options={secondaryChoices[scenario]}
                   translationRoot={`${scenario}.${scenario === 'raise' ? 'amount' : scenario === 'hire' ? 'role' : 'vibe'}.options`}
+                  ariaLabel={t(
+                    `${scenario}.${scenario === 'raise' ? 'amount' : scenario === 'hire' ? 'role' : 'vibe'}.title`,
+                  )}
                   selected={
                     scenario === 'raise'
                       ? selections.amount
@@ -237,6 +241,9 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
                 <OptionGrid
                   options={tertiaryChoices[scenario]}
                   translationRoot={`${scenario}.${scenario === 'raise' ? 'timing' : 'offer'}.options`}
+                  ariaLabel={t(
+                    `${scenario}.${scenario === 'raise' ? 'timing' : 'offer'}.title`,
+                  )}
                   selected={scenario === 'raise' ? selections.timing : selections.offer}
                   onSelect={handleTertiaryChoice}
                   disabled={isProgressing}
@@ -263,8 +270,9 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
                     className="continue-button"
                     onClick={finishDate}
                     disabled={isProgressing}
-                    initial={{ opacity: 0, y: 7 }}
+                    initial={reducedMotion ? false : { opacity: 0, y: 7 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: reducedMotion ? 0.01 : 0.2 }}
                   >
                     {t('shared.continue')} <span aria-hidden="true">→</span>
                   </motion.button>
