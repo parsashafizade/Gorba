@@ -4163,62 +4163,72 @@ html[lang='fa'] .hire-pass__fields strong {
   text-shadow: 0 2px 8px rgb(25 39 91 / 22%);
 }
 
+/* =========================================================
+   FINAL MOBILE COMPOSITION
+   Applies only to phone layouts. Desktop/tablet remain unchanged.
+   ========================================================= */
+
 @media (max-width: 620px) {
   :root {
-    --header-height: 56px;
+    --header-height: 60px;
   }
+
+  /* -------------------- Header -------------------- */
 
   .app-header {
     height: calc(var(--header-height) + env(safe-area-inset-top));
-    gap: 6px;
-    padding: calc(5px + env(safe-area-inset-top)) max(6px, env(safe-area-inset-right)) 6px
-      max(6px, env(safe-area-inset-left));
+    gap: 7px;
+    padding: calc(6px + env(safe-area-inset-top)) max(7px, env(safe-area-inset-right)) 7px
+      max(7px, env(safe-area-inset-left));
   }
 
   .selector-shell {
-    width: min(47vw, 170px);
-    height: 39px;
+    width: min(48vw, 178px);
+    height: 42px;
     border-width: 2px;
-    border-radius: 14px 12px 15px 12px;
+    border-radius: 15px 13px 16px 12px;
   }
 
   .selector-icon {
-    width: 27px;
-    font-size: 0.76rem;
+    width: 29px;
+    font-size: 0.82rem;
   }
 
   .selector-shell select {
-    padding-inline: 0 21px;
-    font-size: 0.76rem;
+    min-width: 0;
+    padding-inline: 0 22px;
+    font-size: 0.82rem;
+    text-overflow: ellipsis;
   }
 
   .selector-chevron {
-    top: 6px;
+    top: 7px;
     inset-inline-end: 6px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   .language-selector {
-    height: 43px;
+    height: 46px;
     padding: 2px;
     border-width: 2px;
+    border-radius: 15px 17px 13px 16px;
   }
 
   .language-selector button {
-    min-width: 37px;
-    min-height: 35px;
+    min-width: 39px;
+    min-height: 38px;
     padding-inline: 5px;
-    font-size: 0.62rem;
+    font-size: 0.66rem;
   }
+
+  /* -------------------- Page frame -------------------- */
 
   .experience {
     height: 100svh;
     min-height: 100svh;
-
-    padding: calc(var(--header-height) + env(safe-area-inset-top) + 4px)
-      max(9px, env(safe-area-inset-right)) max(7px, env(safe-area-inset-bottom))
-      max(9px, env(safe-area-inset-left));
-
+    padding: calc(var(--header-height) + env(safe-area-inset-top) + 6px)
+      max(10px, env(safe-area-inset-right)) max(9px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
     overflow-x: clip;
     overflow-y: hidden;
   }
@@ -4233,179 +4243,225 @@ html[lang='fa'] .hire-pass__fields strong {
   }
 
   .step-progress {
-    height: 19px;
-    margin: 0 auto;
-    padding-inline: 7px;
-    scale: 0.72;
+    height: 20px;
+    margin: 0 auto 3px;
+    padding-inline: 8px;
+    scale: 0.78;
+  }
+
+  /* -------------------- Mascot -------------------- */
+
+  .mascot-column {
+    width: 100%;
+    min-width: 0;
   }
 
   .experience:not(.experience--companion) .mascot-column {
-    min-height: clamp(180px, 26svh, 205px);
+    min-height: clamp(218px, 29svh, 248px);
   }
 
   .experience--companion .mascot-column {
-    min-height: clamp(172px, 24svh, 190px);
+    min-height: clamp(198px, 27svh, 222px);
   }
 
   .mascot {
-    width: clamp(148px, 42vw, 174px);
-    max-width: 48vw;
+    width: clamp(170px, 47vw, 198px);
+    max-width: 56vw;
   }
 
   .mascot--companion {
-    width: clamp(132px, 37vw, 150px);
-    max-width: 42vw;
+    width: clamp(148px, 41vw, 168px);
+    max-width: 48vw;
   }
 
   .mascot-column::before {
-    width: clamp(165px, 46vw, 186px);
-    max-width: 52vw;
+    width: clamp(188px, 52vw, 214px);
+    max-width: 61vw;
   }
 
   .experience--companion .mascot-column::before {
-    width: clamp(146px, 41vw, 165px);
-    max-width: 47vw;
+    width: clamp(166px, 46vw, 188px);
+    max-width: 54vw;
   }
+
+  /* -------------------- Mobile dialogue safe zones --------------------
+     Recipient/manager: physically RIGHT of the mascot.
+     Kitten: physically LEFT of the mascot.
+     Physical left/right are intentional so RTL cannot swap them.
+     ------------------------------------------------------------------ */
 
   .reaction-bubble,
   .recipient-bubble {
-    font-size: clamp(0.6rem, 2.45vw, 0.69rem);
-    line-height: 1.28;
+    font-size: clamp(0.68rem, 2.75vw, 0.77rem);
+    line-height: 1.34;
   }
 
   .recipient-bubble {
     inset: auto;
-
-    top: 14%;
-    right: clamp(-118px, -27vw, -78px);
+    top: -100%;
+    right: clamp(-120px, -28vw, -88px);
     bottom: auto;
     left: auto;
 
-    width: min(132px, 35vw);
-    max-width: min(132px, 35vw);
-    min-height: 52px;
+    width: min(148px, 39vw);
+    max-width: min(148px, 39vw);
+    min-height: 60px;
 
-    gap: 6px;
-    padding: 7px 8px 8px 6px;
+    gap: 7px;
+    padding: 9px 10px 10px 7px;
   }
 
   [dir='rtl'] .recipient-bubble {
-    padding: 7px 6px 8px 8px;
+    padding: 9px 7px 10px 10px;
+  }
+
+  /* Recipient tail must point OUTWARD to the right,
+     not toward the mascot. */
+  .recipient-bubble::before {
+    inset-inline-start: auto;
+    inset-inline-end: auto;
+    left: auto;
+    right: 14px;
+    bottom: -9px;
+
+    width: 16px;
+    height: 16px;
+
+    border-inline-start: 0;
+    border-inline-end: 0;
+    border-left: 0;
+    border-right: 2.5px solid var(--line);
+    border-bottom: 2.5px solid var(--line);
+
+    background: #fff;
+    transform: rotate(35deg) skew(7deg);
   }
 
   .reaction-bubble--anchored {
     inset: auto;
-
-    top: 36%;
+    top: 39%;
     right: auto;
     bottom: auto;
-    left: clamp(-118px, -27vw, -78px);
+    left: clamp(-120px, -28vw, -88px);
 
-    width: min(132px, 35vw);
-    max-width: min(132px, 35vw);
-    min-height: 58px;
+    width: min(148px, 39vw);
+    max-width: min(148px, 39vw);
+    min-height: 68px;
 
-    grid-template-columns: 19px minmax(0, 1fr);
-    gap: 5px;
+    grid-template-columns: 21px minmax(0, 1fr);
+    gap: 6px;
 
-    padding: 7px 8px 8px;
-    font-size: clamp(0.6rem, 2.45vw, 0.69rem);
-    line-height: 1.28;
+    padding: 9px 10px 10px;
+    font-size: clamp(0.68rem, 2.75vw, 0.77rem);
+    line-height: 1.34;
   }
 
   .recipient-bubble__avatar,
   .dialogue-identity {
-    width: 20px;
-    height: 20px;
-    flex-basis: 20px;
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
     border-width: 1.5px;
   }
 
   .dialogue-identity svg {
-    width: 11px;
-    height: 11px;
+    width: 12px;
+    height: 12px;
   }
 
   .recipient-bubble__body small,
   .reaction-bubble small {
-    font-size: 0.48rem;
+    font-size: 0.51rem;
   }
+
+  /* -------------------- Main copy -------------------- */
 
   .content-column {
     width: 100%;
+    min-width: 0;
   }
 
   .content-intro {
     width: 100%;
-    max-width: 390px;
-    margin-inline: auto;
+    max-width: 405px;
+    margin: 11px auto 0;
     text-align: center;
   }
 
   .eyebrow {
-    margin-bottom: 5px;
-    padding: 5px 8px 4px;
-    font-size: 0.57rem;
+    margin-bottom: 7px;
+    padding: 5px 9px 4px;
+    font-size: 0.61rem;
   }
 
   .content-intro h1,
   .choice-step .content-intro h1,
   .schedule-step .content-intro h1 {
-    max-width: 380px;
+    max-width: 395px;
     margin-inline: auto;
-    font-size: clamp(1.6rem, 7.8vw, 2.1rem);
-    line-height: 1;
+    font-size: clamp(1.85rem, 8.7vw, 2.4rem);
+    line-height: 1.02;
   }
 
   html[lang='fa'] .content-intro h1,
   html[lang='fa'] .choice-step .content-intro h1,
   html[lang='fa'] .schedule-step .content-intro h1 {
-    font-size: clamp(1.7rem, 8vw, 2.15rem);
-    line-height: 1.08;
+    font-size: clamp(1.95rem, 9vw, 2.48rem);
+    line-height: 1.1;
   }
 
   .content-intro p {
-    max-width: 370px;
-    margin: 7px auto 0;
-    font-size: clamp(0.67rem, 2.7vw, 0.76rem);
-    line-height: 1.35;
+    max-width: 385px;
+    margin: 11px auto 0;
+    font-size: clamp(0.75rem, 3.05vw, 0.86rem);
+    line-height: 1.46;
   }
 
+  /* -------------------- Yes / No -------------------- */
+
   .challenge-arena {
-    width: min(360px, 96%);
-    height: clamp(125px, 18svh, 150px);
-    margin: 4px auto 0;
+    width: min(370px, 97%);
+    height: clamp(145px, 20svh, 172px);
+    margin: 10px auto 0;
   }
 
   .yes-slot {
-    left: calc(50% - 58px);
+    left: calc(50% - 62px);
   }
 
   .no-slot {
-    left: calc(50% + 61px);
+    left: calc(50% + 66px);
   }
 
   .answer-button {
-    min-height: 47px;
-    padding-inline: 13px;
+    min-height: 52px;
+    padding-inline: 15px;
     border-width: 2px;
+    touch-action: manipulation;
   }
 
   .answer-button--yes {
-    min-width: 112px;
-    font-size: 0.71rem;
+    min-width: 120px;
+    font-size: 0.78rem;
   }
 
   .answer-button--no {
-    min-width: 72px;
-    font-size: 0.68rem;
+    min-width: 78px;
+    font-size: 0.74rem;
+  }
+
+  /* -------------------- Choice steps -------------------- */
+
+  .choice-step,
+  .schedule-step {
+    padding-bottom: 8px;
   }
 
   .option-grid,
   .option-grid--vibe {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    margin-top: 10px;
+    gap: 9px;
+    margin-top: 13px;
   }
 
   .option-grid--vibe .choice-card:last-child {
@@ -4413,122 +4469,276 @@ html[lang='fa'] .hire-pass__fields strong {
   }
 
   .choice-card {
-    min-height: 67px;
-    gap: 7px;
-    padding: 9px 30px 9px 10px;
+    min-height: 72px;
+    gap: 8px;
+    padding: 10px 32px 10px 11px;
     border-width: 2px;
-    border-radius: 17px 14px 18px 15px;
+    border-radius: 18px 15px 19px 16px;
+    touch-action: manipulation;
   }
 
   [dir='rtl'] .choice-card {
-    padding: 9px 10px 9px 30px;
+    padding: 10px 11px 10px 32px;
   }
 
   .choice-icon {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     border-width: 1.5px;
-    font-size: 1rem;
+    font-size: 1.08rem;
   }
 
   .choice-copy {
-    gap: 2px;
+    gap: 3px;
   }
 
   .choice-copy strong {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
   }
 
   .choice-copy small {
-    font-size: 0.57rem;
+    font-size: 0.6rem;
   }
 
   .choice-check {
-    width: 20px;
-    height: 20px;
-    top: 8px;
-    inset-inline-end: 8px;
+    width: 21px;
+    height: 21px;
+    top: 9px;
+    inset-inline-end: 9px;
     border-width: 1.5px;
-    font-size: 0.55rem;
+    font-size: 0.57rem;
   }
+
+  /* -------------------- Raise runaway choices -------------------- */
 
   .runaway-choice-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-    margin-top: 9px;
+    gap: 8px;
+    margin-top: 11px;
   }
 
   .runaway-choice-zone {
-    min-height: 65px;
-    padding: 6px 8px;
+    min-height: 69px;
+    padding: 7px 9px;
   }
 
   .choice-card--runaway {
-    min-height: 48px;
-    padding-block: 7px;
+    min-height: 51px;
+    padding-block: 8px;
   }
 
+  /* -------------------- Date / Time -------------------- */
+
   .date-time-picker {
-    margin-top: 10px;
+    margin-top: 12px;
   }
 
   .date-time-picker fieldset {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .date-time-picker legend {
-    margin-bottom: 6px;
-    padding: 3px 7px;
-    font-size: 0.62rem;
+    margin-bottom: 7px;
+    padding: 4px 8px;
+    font-size: 0.65rem;
   }
 
   .date-rail,
   .time-rail {
-    gap: 7px;
-    padding-bottom: 8px;
+    gap: 8px;
+    padding-bottom: 9px;
   }
 
   .date-rail button {
-    flex-basis: 57px;
-    min-height: 67px;
+    flex-basis: 60px;
+    min-height: 72px;
   }
 
   .date-rail button strong {
-    font-size: 1.15rem;
+    font-size: 1.22rem;
   }
 
   .time-rail {
-    grid-template-rows: repeat(2, 38px);
-    grid-auto-columns: 66px;
+    grid-template-rows: repeat(2, 40px);
+    grid-auto-columns: 69px;
   }
 
   .time-rail button {
-    font-size: 0.68rem;
+    font-size: 0.71rem;
   }
 
   .continue-button {
-    min-height: 47px;
-    padding-inline: 16px;
-    font-size: 0.72rem;
+    min-height: 50px;
+    padding-inline: 17px;
+    font-size: 0.76rem;
   }
+
+  /* -------------------- Decorations -------------------- */
 
   .sticker {
-    scale: 0.58;
-    opacity: 0.78;
+    scale: 0.62;
+    opacity: 0.8;
   }
 
+  /* -------------------- Result -------------------- */
+
   .experience-layout--step-4 .mascot-column {
-    min-height: 150px;
+    min-height: 165px;
+  }
+
+  .experience-layout--step-4 .mascot--companion {
+    width: 145px;
   }
 
   .result-card {
-    min-height: 355px;
-    padding: 20px 17px;
+    min-height: 365px;
+    margin-bottom: 8px;
+    padding: 21px 18px;
     border-width: 2px;
   }
 
   .result-card h1,
   html[lang='fa'] .result-card h1 {
-    font-size: clamp(1.65rem, 7vw, 2.2rem);
+    font-size: clamp(1.75rem, 7.5vw, 2.32rem);
+  }
+
+  .result-seal {
+    margin-bottom: 9px;
+  }
+
+  .raise-certificate__hero {
+    margin: 15px 0 13px;
+  }
+
+  .raise-certificate__hero strong {
+    font-size: clamp(4.4rem, 22vw, 5.8rem);
+  }
+
+  .result-card .result-statement {
+    margin-top: 13px;
+    font-size: 0.78rem;
+  }
+
+  .mischief-note {
+    margin-top: 9px;
+    font-size: 0.68rem;
+  }
+
+  .hire-pass__identity {
+    margin: 16px 0;
+  }
+
+  .hire-pass__fields {
+    gap: 8px;
+  }
+
+  .hire-pass__fields > div {
+    min-height: 62px;
+    padding: 10px 12px;
+  }
+
+  .hire-pass__footer {
+    margin-top: 13px;
+  }
+
+  .date-keepsake__ticket {
+    margin-top: 14px;
+    padding: 15px 14px 13px;
+  }
+}
+
+/* Narrow phones: preserve the side-by-side dialogue zones
+   without allowing either bubble to leave the viewport. */
+@media (max-width: 360px) {
+  .recipient-bubble {
+    right: -76px;
+    width: 136px;
+    max-width: 136px;
+  }
+
+  .reaction-bubble--anchored {
+    left: -76px;
+    width: 136px;
+    max-width: 136px;
+  }
+
+  .mascot {
+    width: 166px;
+  }
+
+  .mascot--companion {
+    width: 145px;
+  }
+
+  .content-intro h1,
+  html[lang='fa'] .content-intro h1 {
+    font-size: 1.92rem;
+  }
+}
+
+/* Short phone viewports get a small density reduction so the
+   first interaction still fits without page scrolling. */
+@media (max-width: 620px) and (max-height: 760px) {
+  :root {
+    --header-height: 56px;
+  }
+
+  .selector-shell {
+    height: 39px;
+  }
+
+  .language-selector {
+    height: 42px;
+  }
+
+  .language-selector button {
+    min-height: 34px;
+  }
+
+  .experience:not(.experience--companion) .mascot-column {
+    min-height: 196px;
+  }
+
+  .experience--companion .mascot-column {
+    min-height: 182px;
+  }
+
+  .mascot {
+    width: clamp(158px, 44vw, 180px);
+  }
+
+  .mascot--companion {
+    width: clamp(140px, 39vw, 156px);
+  }
+
+  .content-intro {
+    margin-top: 6px;
+  }
+
+  .content-intro h1,
+  html[lang='fa'] .content-intro h1 {
+    font-size: clamp(1.72rem, 8.2vw, 2.16rem);
+  }
+
+  .content-intro p {
+    margin-top: 7px;
+    font-size: clamp(0.7rem, 2.8vw, 0.79rem);
+  }
+
+  .challenge-arena {
+    height: clamp(126px, 17svh, 145px);
+    margin-top: 6px;
+  }
+
+  .answer-button {
+    min-height: 47px;
+  }
+
+  .recipient-bubble {
+    top: -3%;
+  }
+
+  .reaction-bubble--anchored {
+    top: 38%;
   }
 }
