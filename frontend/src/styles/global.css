@@ -4884,3 +4884,239 @@ html[lang='fa'] .hire-pass__fields strong {
     left: calc(50% + 68px);
   }
 }
+/* =========================================================
+   CUSTOM SCENARIO DROPDOWN
+   ========================================================= */
+
+.scenario-selector--custom {
+  position: relative;
+  z-index: 70;
+  direction: ltr;
+}
+
+.scenario-trigger {
+  width: 100%;
+  padding: 0;
+  color: var(--ink, #3b2a20);
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+html[lang='fa'] .scenario-trigger {
+  font-family: var(--font-ui);
+  direction: rtl;
+}
+
+.scenario-trigger__label {
+  flex: 1;
+  min-width: 0;
+  padding-inline: 4px 32px;
+  overflow: hidden;
+  color: var(--ink, #3b2a20);
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selector-chevron {
+  transition:
+    transform 180ms ease,
+    translate 180ms ease;
+}
+
+.selector-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* The opened dropdown itself */
+.scenario-menu {
+  position: absolute;
+  z-index: 100;
+
+  /*
+    Change ONLY this number if you want
+    the opened list farther from / closer to the trigger.
+  */
+  top: calc(100% + 14px);
+
+  left: 0;
+
+  width: clamp(210px, 100%, 245px);
+  min-width: 100%;
+
+  padding: 7px;
+
+  border: 2.5px solid var(--ink, #3b2a20);
+  border-radius: 18px 16px 20px 15px;
+
+  background: color-mix(in srgb, var(--hud, #fff7dc) 94%, white);
+
+  box-shadow:
+    0 7px 0 var(--hud-lip, #d2aa55),
+    0 16px 30px rgb(42 31 27 / 20%);
+
+  overflow: hidden;
+
+  transform-origin: top left;
+
+  animation: scenario-menu-enter 160ms ease-out both;
+}
+
+html[lang='fa'] .scenario-menu {
+  direction: rtl;
+}
+
+.scenario-menu__option {
+  width: 100%;
+  min-height: 48px;
+
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 8px;
+
+  padding: 7px 10px;
+
+  border: 0;
+  border-radius: 12px;
+
+  color: var(--ink, #3b2a20);
+  background: transparent;
+
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  font-weight: 720;
+
+  text-align: start;
+  cursor: pointer;
+
+  transition:
+    background-color 120ms ease,
+    translate 120ms ease;
+}
+
+html[lang='fa'] .scenario-menu__option {
+  font-family: var(--font-ui);
+  font-weight: 780;
+}
+
+.scenario-menu__option:hover,
+.scenario-menu__option:focus-visible {
+  background: color-mix(in srgb, var(--accent-soft, #ffed9d) 72%, transparent);
+
+  outline: none;
+}
+
+.scenario-menu__option:active {
+  translate: 0 2px;
+}
+
+.scenario-menu__option.is-selected {
+  background: color-mix(in srgb, var(--toggle, #ffd15a) 38%, transparent);
+}
+
+.scenario-menu__icon {
+  display: grid;
+  place-items: center;
+
+  width: 28px;
+  height: 28px;
+
+  font-size: 1rem;
+}
+
+.scenario-menu__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scenario-menu__check {
+  display: grid;
+  place-items: center;
+
+  width: 22px;
+  height: 22px;
+
+  color: var(--ink, #3b2a20);
+
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+@keyframes scenario-menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile */
+@media (max-width: 620px) {
+  .scenario-selector--custom {
+    width: min(47vw, 170px);
+  }
+
+  .scenario-trigger {
+    width: 100%;
+  }
+
+  .scenario-trigger__label {
+    padding-inline: 3px 24px;
+    font-size: 0.76rem;
+  }
+
+  .scenario-menu {
+    /* فاصله لیست بازشده از دکمه در موبایل */
+    top: calc(100% + 12px);
+
+    left: 0;
+
+    width: min(210px, calc(100vw - 20px));
+    min-width: 190px;
+
+    padding: 6px;
+    border-width: 2px;
+    border-radius: 16px 14px 18px 14px;
+  }
+
+  .scenario-menu__option {
+    min-height: 43px;
+    grid-template-columns: 26px minmax(0, 1fr) 21px;
+    gap: 6px;
+
+    padding: 6px 8px;
+
+    font-size: 0.75rem;
+  }
+
+  .scenario-menu__icon {
+    width: 24px;
+    height: 24px;
+    font-size: 0.86rem;
+  }
+
+  .scenario-menu__check {
+    width: 19px;
+    height: 19px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scenario-menu {
+    animation: none;
+  }
+
+  .selector-chevron {
+    transition: none;
+  }
+}
