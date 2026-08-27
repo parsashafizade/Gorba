@@ -4647,8 +4647,6 @@ html[lang='fa'] .hire-pass__fields strong {
   }
 }
 
-/* Narrow phones: preserve the side-by-side dialogue zones
-   without allowing either bubble to leave the viewport. */
 @media (max-width: 360px) {
   .recipient-bubble {
     right: -76px;
@@ -4676,8 +4674,6 @@ html[lang='fa'] .hire-pass__fields strong {
   }
 }
 
-/* Short phone viewports get a small density reduction so the
-   first interaction still fits without page scrolling. */
 @media (max-width: 620px) and (max-height: 760px) {
   :root {
     --header-height: 56px;
@@ -4740,5 +4736,151 @@ html[lang='fa'] .hire-pass__fields strong {
 
   .reaction-bubble--anchored {
     top: 38%;
+  }
+}
+
+@media (max-width: 620px) {
+  .choice-step,
+  .schedule-step {
+    padding-bottom: 18px;
+  }
+
+  .option-grid,
+  .option-grid--vibe,
+  .runaway-choice-grid {
+    margin-bottom: 10px;
+  }
+
+  .experience:has(.experience-layout--step-4) {
+    height: auto;
+    min-height: 100svh;
+
+    overflow-x: clip;
+    overflow-y: auto;
+
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+
+  .experience-layout--step-4 {
+    gap: 2px;
+  }
+
+  .experience-layout--step-4 .mascot-column {
+    min-height: 190px;
+  }
+
+  .experience-layout--step-4 .mascot--companion {
+    width: clamp(154px, 43vw, 164px);
+    max-width: 46vw;
+  }
+
+  .experience-layout--step-4 .reaction-bubble,
+  .experience-layout--step-4 .reaction-bubble--anchored {
+    inset: auto;
+
+    top: 30%;
+
+    right: auto;
+    bottom: auto;
+
+    left: calc((100vw - 100%) / -2 + 88px);
+
+    width: min(124px, 32vw);
+    max-width: min(124px, 32vw);
+    min-height: 60px;
+
+    padding: 8px 9px 9px;
+
+    font-size: clamp(0.64rem, 2.55vw, 0.71rem);
+    line-height: 1.32;
+  }
+
+  .experience-layout--step-4 .reaction-bubble::after,
+  .experience-layout--step-4 .reaction-bubble--anchored::after {
+    inset-inline-start: auto;
+    inset-inline-end: auto;
+
+    left: auto;
+    right: 13px;
+
+    border-inline-start: 0;
+    border-inline-end: 0;
+    border-left: 0;
+    border-right: 2.5px solid var(--line);
+    border-bottom: 2.5px solid var(--line);
+
+    transform: rotate(32deg) skew(8deg);
+  }
+
+  .experience-layout--step-4 .content-column {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .experience-layout--step-4 .result-card {
+    width: 92%;
+    max-width: 92%;
+
+    padding: 20px 15px;
+
+    scale: 0.92;
+    transform-origin: top center;
+
+    margin: 2px auto max(18px, env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 620px) {
+  .ask-step {
+    margin-top: 16px;
+  }
+
+  .ask-step .content-intro h1 {
+    font-size: clamp(2.15rem, 9.5vw, 2.75rem);
+    line-height: 1.1;
+  }
+
+  html[lang='fa'] .ask-step .content-intro h1 {
+    font-size: clamp(2.25rem, 10vw, 2.9rem);
+    line-height: 1.13;
+  }
+
+  .ask-step .content-intro p {
+    margin-top: 13px;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .ask-step .eyebrow {
+    margin-bottom: 9px;
+    padding: 6px 10px 5px;
+    font-size: 0.64rem;
+  }
+
+  .ask-step .challenge-arena {
+    height: clamp(145px, 19svh, 170px);
+    margin-top: 12px;
+  }
+
+  .ask-step .answer-button {
+    min-height: 54px;
+    padding-inline: 16px;
+  }
+
+  .ask-step .answer-button--yes {
+    min-width: 126px;
+    font-size: 0.79rem;
+  }
+
+  .ask-step .answer-button--no {
+    min-width: 80px;
+    font-size: 0.75rem;
+  }
+
+  .ask-step .yes-slot {
+    left: calc(50% - 64px);
+  }
+
+  .ask-step .no-slot {
+    left: calc(50% + 68px);
   }
 }
