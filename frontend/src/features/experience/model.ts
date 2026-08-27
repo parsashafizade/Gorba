@@ -14,4 +14,10 @@ export type ChoiceOption = {
   icon?: string;
   emotion: MascotEmotion;
   reactionKey: string;
+  reactionKeys?: readonly string[];
+};
+
+export type PlayfulOption = {
+  id: string;
+  labelKey: string;
 };

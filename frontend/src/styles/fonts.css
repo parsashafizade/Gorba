@@ -1,0 +1,83 @@
+@import '@fontsource-variable/fredoka';
+@import '@fontsource-variable/nunito';
+
+
+
+@font-face {
+  font-family: 'Colak Local';
+  src: url('../assets/fonts/Colak.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rokh Local';
+  src: url('../assets/fonts/Rokh-ExtraBold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Potk Local';
+  src: url('../assets/fonts/Potk.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hasti Local';
+  src: url('../assets/fonts/Hasti-HeavyRD.woff') format('woff');
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+
+
+:root {
+  --font-display-en: 'Fredoka Variable', sans-serif;
+  --font-body-en: 'Nunito Variable', sans-serif;
+  --font-ui-en: 'Fredoka Variable', 'Nunito Variable', sans-serif;
+
+  --font-dialogue-en: 'Nunito Variable', sans-serif;
+  --font-button-en: 'Fredoka Variable', sans-serif;
+  --font-choice-en: 'Fredoka Variable', 'Nunito Variable', sans-serif;
+  --font-result-en: 'Fredoka Variable', sans-serif;
+  --font-numeric-en: 'Fredoka Variable', sans-serif;
+
+  --font-display-fa: 'Colak Local', sans-serif;
+  --font-body-fa: 'Rokh Local', sans-serif;
+  --font-ui-fa: 'Rokh Local', sans-serif;
+
+  --font-dialogue-fa: 'Rokh Local', sans-serif;
+  --font-button-fa: 'Potk Local', sans-serif;
+  --font-choice-fa: 'Rokh Local', sans-serif;
+  --font-result-fa: 'Hasti Local', sans-serif;
+  --font-numeric-fa: 'Hasti Local', sans-serif;
+
+  --font-display: var(--font-display-en);
+  --font-body: var(--font-body-en);
+  --font-ui: var(--font-ui-en);
+
+  --font-dialogue: var(--font-dialogue-en);
+  --font-button: var(--font-button-en);
+  --font-choice: var(--font-choice-en);
+  --font-result: var(--font-result-en);
+  --font-numeric: var(--font-numeric-en);
+}
+
+
+html[lang='fa'] {
+  --font-display: var(--font-display-fa);
+  --font-body: var(--font-body-fa);
+  --font-ui: var(--font-ui-fa);
+
+  --font-dialogue: var(--font-dialogue-fa);
+  --font-button: var(--font-button-fa);
+  --font-choice: var(--font-choice-fa);
+  --font-result: var(--font-result-fa);
+  --font-numeric: var(--font-numeric-fa);
+}

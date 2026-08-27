@@ -1,9 +1,4 @@
-export const reactionPlacements = [
-  'upper-right',
-  'middle-left',
-  'middle-right',
-  'lower-left',
-] as const;
+export const reactionPlacements = ['anchored'] as const;
 
 export type ReactionPlacement = (typeof reactionPlacements)[number];
 

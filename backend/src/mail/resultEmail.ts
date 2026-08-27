@@ -2,16 +2,14 @@ import { selectedRaisePercentage, type CompletedResult } from '../../../shared/r
 
 const labels = {
   raiseTiming: {
-    next: 'Next paycheck',
-    month: 'This month',
-    meeting: 'After a meeting',
-    surprise: 'Surprise me',
+    next: 'Today',
+    month: 'Next week',
   },
   hireRole: { member: 'Team Member', specialist: 'Specialist', lead: 'Team Lead' },
   hireOffer: {
-    cute: 'Let me think',
-    talk: 'Send the paperwork',
-    sign: 'Where’s the pen?',
+    cute: 'Low',
+    talk: 'Medium',
+    sign: 'High',
   },
   dateVibe: {
     cafe: 'Coffee somewhere cozy',

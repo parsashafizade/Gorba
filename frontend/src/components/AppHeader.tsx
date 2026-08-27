@@ -4,7 +4,13 @@ import { scenarioFromPath, scenarioRoutes } from '../config/scenarios';
 import { applyDocumentLocale, type Locale } from '../localization/i18n';
 import type { ScenarioId } from '../features/experience/model';
 
-export function AppHeader({ enabledScenarios }: { enabledScenarios: readonly ScenarioId[] }) {
+export function AppHeader({
+  enabledScenarios,
+  onScenarioSwitch,
+}: {
+  enabledScenarios: readonly ScenarioId[];
+  onScenarioSwitch: (from: ScenarioId, to: ScenarioId) => void;
+}) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,7 +35,11 @@ export function AppHeader({ enabledScenarios }: { enabledScenarios: readonly Sce
         <select
           id="scenario-select"
           value={scenario}
-          onChange={(event) => navigate(scenarioRoutes[event.target.value as ScenarioId])}
+          onChange={(event) => {
+            const nextScenario = event.target.value as ScenarioId;
+            onScenarioSwitch(scenario, nextScenario);
+            navigate(scenarioRoutes[nextScenario]);
+          }}
         >
           {enabledScenarios.map((enabledScenario) => (
             <option key={enabledScenario} value={enabledScenario}>

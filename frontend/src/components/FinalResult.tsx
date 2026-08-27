@@ -7,9 +7,10 @@ import type { ScenarioId, ScenarioSelections } from '../features/experience/mode
 type FinalResultProps = {
   scenario: ScenarioId;
   selections: ScenarioSelections;
+  callbackKey?: string | null;
 };
 
-export function FinalResult({ scenario, selections }: FinalResultProps) {
+export function FinalResult({ scenario, selections, callbackKey }: FinalResultProps) {
   const { t, i18n } = useTranslation();
   const locale = i18n.resolvedLanguage === 'fa' ? 'fa-IR' : 'en-US';
   const result = buildCompletedResult(scenario, selections);
@@ -22,7 +23,7 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
         <div className="raise-certificate__topline">
           <span className="result-seal">{t('raise.final.seal')}</span>
           <span className="raise-certificate__stamp" dir="ltr" aria-hidden="true">
-            +{adjustment}
+            +{adjustment}%
           </span>
         </div>
         <h1>{t('raise.final.title')}</h1>
@@ -53,7 +54,7 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
           </div>
         </div>
 
-        <p className="result-statement">{t('raise.final.statement')}</p>
+        <p className="result-statement">{t(callbackKey ?? 'raise.final.statement')}</p>
         <span className="mischief-note">✎ {t('raise.final.mischief')}</span>
       </ResultMotion>
     );
@@ -94,7 +95,7 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
         </div>
 
         <div className="hire-pass__footer">
-          <p>{t('hire.final.statement')}</p>
+          <p>{t(callbackKey ?? 'hire.final.statement')}</p>
           <span>{t('hire.final.upgrade')}</span>
           <i aria-hidden="true" />
         </div>
@@ -155,7 +156,7 @@ export function FinalResult({ scenario, selections }: FinalResultProps) {
           </div>
         </div>
 
-        <p className="result-statement">{t('date.final.statement')}</p>
+        <p className="result-statement">{t(callbackKey ?? 'date.final.statement')}</p>
         <span className="date-keepsake__note">{t('date.final.ticketNote')}</span>
         <DateOrnaments />
       </ResultMotion>

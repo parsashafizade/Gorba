@@ -12,6 +12,47 @@ import { assetMotion, mascotBehavior } from './config';
 import { reactionPlacementFor } from './dialogue';
 import { mapPointerToGaze } from './gaze';
 
+function SpeakerIcon({
+  speaker,
+  scenario,
+}: {
+  speaker: 'kitten' | 'recipient';
+  scenario: ScenarioId;
+}) {
+  if (speaker === 'kitten') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 9 4 3l5 3a9 9 0 0 1 6 0l5-3-1 6a8 8 0 1 1-14 0Z" />
+        <path d="M9 13h.01M15 13h.01M10 17c1.2.8 2.8.8 4 0" />
+      </svg>
+    );
+  }
+
+  if (scenario === 'raise') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 8h16v11H4zM9 8V5h6v3M4 12h16M10 12v2h4v-2" />
+      </svg>
+    );
+  }
+
+  if (scenario === 'hire') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 5h10a2 2 0 0 1 2 2v13H5V7a2 2 0 0 1 2-2Z" />
+        <path d="M9 5V3h6v2M8 10h8M8 14h6" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 5h16v11H9l-5 4V5Z" />
+      <path d="M8 10h.01M12 10h.01M16 10h.01" />
+    </svg>
+  );
+}
+
 const decodeImage = async (src: string) => {
   const image = new Image();
   image.src = src;
@@ -120,7 +161,7 @@ export function Mascot({
   trackingEnabled,
   companion = false,
 }: MascotProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const reducedMotion = useReducedMotion();
   const stageHostRef = useRef<HTMLDivElement>(null);
   const gazeRef = useRef<MascotAssetKey>('gaze.center');
@@ -129,7 +170,7 @@ export function Mascot({
   const [temporary, setTemporary] = useState<MascotAssetKey | null>(null);
   const requestedAsset = trackingEnabled ? (temporary ?? gaze) : emotion;
   const placement = reactionPlacementFor(reactionTurn);
-  const recipientInitialX = i18n.dir() === 'rtl' ? 36 : -36;
+  const recipientInitialX = 36;
 
   useEffect(() => {
     const idle =
@@ -235,11 +276,11 @@ export function Mascot({
                   : { type: 'spring', stiffness: 390, damping: 27, mass: 0.7 }
               }
             >
-              <span className="recipient-bubble__avatar" aria-hidden="true">
-                {recipientLabel?.slice(0, 1)}
+              <span className="recipient-bubble__avatar dialogue-identity" aria-hidden="true">
+                <SpeakerIcon speaker="recipient" scenario={scenario} />
               </span>
               <span className="recipient-bubble__body">
-                {recipientLabel && <small>{recipientLabel}</small>}
+                {recipientLabel && <span className="sr-only">{recipientLabel}</span>}
                 <span>{recipientMessage}</span>
               </span>
             </motion.div>
@@ -249,7 +290,7 @@ export function Mascot({
           {reaction && (
             <motion.div
               key={`${reactionTurn}-${reaction}`}
-              className={`reaction-bubble reaction-bubble--${placement}`}
+              className="reaction-bubble reaction-bubble--anchored"
               role="status"
               data-testid="kitten-bubble"
               data-placement={placement}
@@ -260,7 +301,7 @@ export function Mascot({
                       opacity: 0,
                       y: 8,
                       scale: 0.92,
-                      rotate: placement.includes('left') ? -1 : 1,
+                      rotate: -1,
                     }
               }
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -271,7 +312,10 @@ export function Mascot({
                   : { type: 'spring', stiffness: 410, damping: 27, mass: 0.68 }
               }
             >
-              <small>{t('shared.kitten')}</small>
+              <span className="dialogue-identity dialogue-identity--kitten" aria-hidden="true">
+                <SpeakerIcon speaker="kitten" scenario={scenario} />
+              </span>
+              <span className="sr-only">{t('shared.kitten')}</span>
               <span>{reaction}</span>
             </motion.div>
           )}

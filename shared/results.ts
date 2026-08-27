@@ -4,7 +4,7 @@ export type ScenarioId = (typeof scenarioIds)[number];
 export const raiseAmounts = ['five', 'ten', 'twenty', 'thirty'] as const;
 export type RaiseAmount = (typeof raiseAmounts)[number];
 
-export const raiseTimings = ['next', 'month', 'meeting', 'surprise'] as const;
+export const raiseTimings = ['next', 'month'] as const;
 export type RaiseTiming = (typeof raiseTimings)[number];
 
 export const hireRoles = ['member', 'specialist', 'lead'] as const;
