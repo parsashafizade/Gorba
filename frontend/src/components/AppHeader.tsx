@@ -18,7 +18,7 @@ export function AppHeader({ enabledScenarios }: { enabledScenarios: readonly Sce
   };
 
   return (
-    <header className="app-header">
+    <header className="app-header" data-scenario={scenario}>
       <div className="selector-shell scenario-selector">
         <span className="selector-icon" aria-hidden="true">
           {scenarioIcons[scenario]}

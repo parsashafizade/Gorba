@@ -1,24 +1,24 @@
-import type { CompletedResult } from '../../../shared/results.js';
+import { selectedRaisePercentage, type CompletedResult } from '../../../shared/results.js';
 
 const labels = {
   raiseTiming: {
     next: 'Next paycheck',
     month: 'This month',
-    meeting: 'After one tiny meeting',
+    meeting: 'After a meeting',
     surprise: 'Surprise me',
   },
   hireRole: { member: 'Team Member', specialist: 'Specialist', lead: 'Team Lead' },
   hireOffer: {
-    cute: 'A tiny offer',
-    talk: 'Okay, now we’re talking',
-    sign: 'Where do I sign?',
+    cute: 'Let me think',
+    talk: 'Send the paperwork',
+    sign: 'Where’s the pen?',
   },
   dateVibe: {
-    cafe: 'Cozy Café',
-    dessert: 'Dessert Date',
-    sunset: 'Sunset Spot',
-    movie: 'Movie',
-    surprise: 'Surprise Me',
+    cafe: 'Coffee somewhere cozy',
+    dessert: 'Dessert first',
+    sunset: 'Catch the sunset',
+    movie: 'Movie night',
+    surprise: 'Choose for me',
   },
 } as const;
 
@@ -51,6 +51,7 @@ export const resultEmail = (result: CompletedResult) => {
   if (result.scenario === 'raise') {
     title = 'Raise experience completed';
     rows = [
+      ['Selected raise', `${selectedRaisePercentage[result.amount]}%`],
       ['Final displayed raise', `${result.finalPercentage}%`],
       ['Timing', labels.raiseTiming[result.timing]],
     ];

@@ -1,11 +1,15 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { noConversationLength } from '../features/experience/scenarioConfig';
+import { reactionPlacements } from '../features/mascot/dialogue';
 import { applyDocumentLocale } from '../localization/i18n';
 import i18n from '../localization/i18n';
 import { App } from './App';
 
-const renderApp = (route = '/', enabledScenarios?: Array<'raise' | 'hire' | 'date'>) =>
+type Scenario = 'raise' | 'hire' | 'date';
+
+const renderApp = (route = '/', enabledScenarios?: Scenario[]) =>
   render(
     <MemoryRouter initialEntries={[route]}>
       <App enabledScenarios={enabledScenarios} />
@@ -18,6 +22,15 @@ const advance = async (milliseconds = 2300) => {
   });
 };
 
+const experience = () => screen.getByRole('main');
+const expectScene = (scenario: Scenario, step: number) => {
+  expect(experience()).toHaveClass(`experience--${scenario}`);
+  expect(experience()).toHaveAttribute('data-step', String(step));
+};
+const chooseRadio = (index: number) => fireEvent.click(screen.getAllByRole('radio')[index]);
+const switchScenario = (scenario: Scenario) =>
+  fireEvent.change(screen.getByRole('combobox'), { target: { value: scenario } });
+
 describe('application flows', () => {
   beforeEach(async () => {
     vi.useFakeTimers();
@@ -28,174 +41,192 @@ describe('application flows', () => {
 
   it('uses Raise at / and resets a destination scenario while preserving language', async () => {
     renderApp();
-    expect(
-      screen.getByText('So... when does my paycheck get a little bigger? 👀'),
-    ).toBeInTheDocument();
+    expectScene('raise', 1);
 
-    fireEvent.click(screen.getByRole('button', { name: /Yesss/ }));
+    fireEvent.click(screen.getByTestId('yes-button'));
     await advance();
-    expect(screen.getByText('Alright boss... how happy are we making me? 😌')).toBeInTheDocument();
+    expectScene('raise', 2);
 
     fireEvent.click(screen.getByRole('button', { name: 'فارسی' }));
     expect(document.documentElement).toHaveAttribute('dir', 'rtl');
-    expect(screen.getByText('خب رئیس... چند درصد قراره خوشحالم کنی؟ 😌')).toBeInTheDocument();
+    expectScene('raise', 2);
 
-    fireEvent.change(screen.getByLabelText('امروز چی می‌خوایم؟'), { target: { value: 'hire' } });
-    expect(screen.getByText('خب... کی قراره منو استخدام کنی؟ 👀')).toBeInTheDocument();
+    switchScenario('hire');
+    expectScene('hire', 1);
     expect(document.documentElement).toHaveAttribute('lang', 'fa');
 
-    fireEvent.change(screen.getByLabelText('امروز چی می‌خوایم؟'), { target: { value: 'raise' } });
-    expect(screen.getByText('خب... حقوق من کی قراره یه کم قد بکشه؟ 👀')).toBeInTheDocument();
+    switchScenario('raise');
+    expectScene('raise', 1);
   });
 
   it('keeps the active step and selection while language changes', async () => {
     renderApp('/raise');
-    fireEvent.click(screen.getByRole('button', { name: /Yesss/ }));
+    fireEvent.click(screen.getByTestId('yes-button'));
     await advance();
 
-    const twenty = screen.getByRole('radio', { name: /20%/ });
-    fireEvent.click(twenty);
-    expect(twenty).toHaveAttribute('aria-checked', 'true');
+    chooseRadio(2);
+    expect(screen.getAllByRole('radio')[2]).toHaveAttribute('aria-checked', 'true');
 
     fireEvent.click(screen.getByRole('button', { name: 'فارسی' }));
-    expect(screen.getByText('خب رئیس... چند درصد قراره خوشحالم کنی؟ 😌')).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /۲۰٪/ })).toHaveAttribute('aria-checked', 'true');
+    expectScene('raise', 2);
+    expect(screen.getAllByRole('radio')[2]).toHaveAttribute('aria-checked', 'true');
 
     fireEvent.click(screen.getByRole('button', { name: 'English' }));
-    expect(screen.getByRole('radio', { name: /20%/ })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getAllByRole('radio')[2]).toHaveAttribute('aria-checked', 'true');
   });
 
-  it('completes the Raise result with the playful kitten adjustment', async () => {
+  it('completes the Raise result with the selected and kitten-adjusted values', async () => {
     renderApp('/raise');
-    fireEvent.click(screen.getByRole('button', { name: /Yesss/ }));
+    fireEvent.click(screen.getByTestId('yes-button'));
     await advance();
-    fireEvent.click(screen.getByRole('radio', { name: /20%/ }));
+    chooseRadio(2);
     await advance();
-    fireEvent.click(screen.getByRole('radio', { name: /Next paycheck/ }));
+    chooseRadio(0);
     await advance();
-    expect(screen.getByText('22%')).toBeInTheDocument();
-    expect(screen.getByText('So... am I richer now? 😌')).toBeInTheDocument();
+
+    expectScene('raise', 4);
+    const result = document.querySelector('.result-card--raise');
+    expect(result).not.toBeNull();
+    expect(result).toHaveTextContent('22%');
+    expect(result).toHaveTextContent('20%');
+    expect(result).toHaveTextContent('+2%');
   });
 
-  it('completes the Hire result', async () => {
+  it('completes the Hire result with the selected role and offer', async () => {
     renderApp('/hire');
-    fireEvent.click(screen.getByRole('button', { name: /Yesss/ }));
+    fireEvent.click(screen.getByTestId('yes-button'));
     await advance();
-    fireEvent.click(screen.getByRole('radio', { name: /Specialist/ }));
+    chooseRadio(1);
     await advance();
-    fireEvent.click(screen.getByRole('radio', { name: /Where do I sign/ }));
+    chooseRadio(2);
     await advance();
-    expect(screen.getByText('Well... guess we work together now 😎')).toBeInTheDocument();
-    expect(screen.getAllByText('Specialist').length).toBeGreaterThan(0);
+
+    expectScene('hire', 4);
+    const result = document.querySelector('.result-card--hire');
+    expect(result).not.toBeNull();
+    expect(result).toHaveTextContent(i18n.t('hire.role.options.specialist.label'));
+    expect(result).toHaveTextContent(i18n.t('hire.offer.options.sign.label'));
   });
 
-  it('offers 14 days and 24 hours, then completes the Date result', async () => {
+  it('offers 14 days and all 24 hours, then completes the Date result', async () => {
     renderApp('/date');
-    fireEvent.click(screen.getByRole('button', { name: /Yesss/ }));
+    fireEvent.click(screen.getByTestId('yes-button'));
     await advance();
-    await advance(250);
-    fireEvent.click(screen.getByRole('radio', { name: /Cozy Café/ }));
+    chooseRadio(0);
     await advance();
-    await advance(250);
 
-    const dateOptions = within(screen.getByRole('group', { name: 'Which day?' })).getAllByRole(
-      'radio',
-    );
-    const timeOptions = within(screen.getByRole('group', { name: 'What time?' })).getAllByRole(
-      'radio',
-    );
-    expect(timeOptions).toHaveLength(24);
+    const groups = screen.getAllByRole('radiogroup');
+    const dateOptions = within(groups[0]).getAllByRole('radio');
+    const timeOptions = within(groups[1]).getAllByRole('radio');
     expect(dateOptions).toHaveLength(14);
-    fireEvent.click(dateOptions[0]);
-    fireEvent.click(screen.getByRole('radio', { name: '20:00' }));
-    fireEvent.click(screen.getByRole('button', { name: /Okay, lock it in/ }));
+    expect(timeOptions).toHaveLength(24);
 
-    expect(screen.getByTestId('kitten-bubble')).toHaveTextContent('Saving the date! 💘');
-    expect(screen.queryByText('Wait... we’re actually doing this 😭❤️')).not.toBeInTheDocument();
+    fireEvent.click(dateOptions[0]);
+    fireEvent.click(timeOptions[20]);
+    fireEvent.click(document.querySelector('.continue-button') as HTMLButtonElement);
+
+    expectScene('date', 3);
+    expect(screen.getByTestId('kitten-bubble')).toBeInTheDocument();
     await advance();
-    expect(screen.getByText('Wait... we’re actually doing this 😭❤️')).toBeInTheDocument();
-    expect(screen.getAllByText('Cozy Café').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('20:00').length).toBeGreaterThan(0);
+    expectScene('date', 4);
+    const result = document.querySelector('.result-card--date');
+    expect(result).not.toBeNull();
+    expect(result).toHaveTextContent(i18n.t('date.vibe.options.cafe.label'));
+    expect(result).toHaveTextContent('20:00');
   });
 
   it('holds the Yes reaction, keeps the choice locked, and advances only once', async () => {
     renderApp('/raise');
-    const yes = screen.getByRole('button', { name: /Yesss/ });
+    const yes = screen.getByTestId('yes-button');
 
     fireEvent.click(yes);
     fireEvent.click(yes);
 
     expect(yes).toBeDisabled();
-    expect(screen.getByTestId('kitten-bubble')).toHaveTextContent('Capitalism briefly healed 😌');
-    expect(
-      screen.queryByText('Alright boss... how happy are we making me? 😌'),
-    ).not.toBeInTheDocument();
+    expect(screen.getByTestId('kitten-bubble')).toBeInTheDocument();
+    expectScene('raise', 1);
 
     await advance(1200);
-    expect(screen.getByTestId('kitten-bubble')).toHaveTextContent('Capitalism briefly healed 😌');
-    expect(
-      screen.queryByText('Alright boss... how happy are we making me? 😌'),
-    ).not.toBeInTheDocument();
+    expect(screen.getByTestId('kitten-bubble')).toBeInTheDocument();
+    expectScene('raise', 1);
 
-    await advance(500);
-    expect(screen.getByText('Alright boss... how happy are we making me? 😌')).toBeInTheDocument();
+    await advance(900);
+    expectScene('raise', 2);
     expect(screen.getAllByRole('radio')).toHaveLength(4);
   });
 
-  it('stages a localized recipient reply before the kitten and cycles back after six Nos', async () => {
+  it('stages the recipient before the kitten and cycles the curated placements', async () => {
     renderApp('/raise');
-    const no = screen.getByRole('button', { name: 'Nope' });
 
-    fireEvent.click(no);
-    expect(screen.getByTestId('recipient-bubble')).toHaveTextContent('Boss');
-    expect(screen.getByTestId('recipient-bubble')).toHaveTextContent('Budget’s a little tight 😅');
+    fireEvent.click(screen.getByTestId('no-button'));
+    const firstRecipient = screen.getByTestId('recipient-bubble').textContent;
+    expect(firstRecipient).toContain(i18n.t('raise.recipient.label'));
     expect(screen.queryByTestId('kitten-bubble')).not.toBeInTheDocument();
 
     await advance(329);
     expect(screen.queryByTestId('kitten-bubble')).not.toBeInTheDocument();
     await advance(1);
-    expect(screen.getByTestId('kitten-bubble')).toHaveTextContent('Even a tiny raise? 🥺');
+    const firstReaction = screen.getByTestId('kitten-bubble').textContent;
+    expect(firstReaction).toContain(i18n.t('shared.kitten'));
 
-    for (let attempt = 2; attempt <= 6; attempt += 1) {
-      fireEvent.click(screen.getByRole('button', { name: 'Nope' }));
+    const placements = [screen.getByTestId('kitten-bubble').dataset.placement];
+    for (let attempt = 2; attempt <= reactionPlacements.length; attempt += 1) {
+      fireEvent.click(screen.getByTestId('no-button'));
+      expect(screen.queryByTestId('kitten-bubble')).not.toBeInTheDocument();
+      await advance(330);
+      placements.push(screen.getByTestId('kitten-bubble').dataset.placement);
+    }
+    expect(placements).toEqual(reactionPlacements);
+
+    for (
+      let attempt = reactionPlacements.length + 1;
+      attempt <= noConversationLength;
+      attempt += 1
+    ) {
+      fireEvent.click(screen.getByTestId('no-button'));
       await advance(330);
     }
-    fireEvent.click(screen.getByRole('button', { name: 'Nope' }));
-    expect(screen.getByTestId('recipient-bubble')).toHaveTextContent('Budget’s a little tight 😅');
+    fireEvent.click(screen.getByTestId('no-button'));
+    expect(screen.getByTestId('recipient-bubble').textContent).toBe(firstRecipient);
     await advance(330);
-    expect(screen.getByTestId('kitten-bubble')).toHaveTextContent('Even a tiny raise? 🥺');
+    expect(screen.getByTestId('kitten-bubble').textContent).toBe(firstReaction);
+    expect(screen.getByTestId('kitten-bubble')).toHaveAttribute(
+      'data-placement',
+      reactionPlacements[0],
+    );
   });
 
   it('resets the No conversation when switching scenarios while preserving locale', async () => {
     renderApp('/raise');
-    fireEvent.click(screen.getByRole('button', { name: 'Nope' }));
+    fireEvent.click(screen.getByTestId('no-button'));
     await advance(330);
-    expect(screen.getByTestId('kitten-bubble')).toHaveTextContent('Even a tiny raise? 🥺');
+    expect(screen.getByTestId('kitten-bubble')).toHaveAttribute(
+      'data-placement',
+      reactionPlacements[0],
+    );
 
-    fireEvent.change(screen.getByLabelText('What are we asking for?'), {
-      target: { value: 'hire' },
-    });
+    switchScenario('hire');
     expect(screen.queryByTestId('recipient-bubble')).not.toBeInTheDocument();
-    fireEvent.change(screen.getByLabelText('What are we asking for?'), {
-      target: { value: 'raise' },
-    });
+    switchScenario('raise');
+    expect(screen.queryByTestId('recipient-bubble')).not.toBeInTheDocument();
 
-    expect(screen.queryByTestId('recipient-bubble')).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Nope' }));
-    expect(screen.getByTestId('recipient-bubble')).toHaveTextContent('Budget’s a little tight 😅');
+    fireEvent.click(screen.getByTestId('no-button'));
+    expect(screen.getByTestId('recipient-bubble')).toHaveTextContent(
+      i18n.t('raise.recipient.label'),
+    );
   });
 
   it('notifies only after completion and does not duplicate on normal rerenders', async () => {
     renderApp('/raise');
     const request = vi.mocked(fetch);
 
-    fireEvent.click(screen.getByRole('button', { name: /Yesss/ }));
+    fireEvent.click(screen.getByTestId('yes-button'));
     await advance();
-    fireEvent.click(screen.getByRole('radio', { name: /20%/ }));
+    chooseRadio(2);
     await advance();
     expect(request).not.toHaveBeenCalled();
 
-    fireEvent.click(screen.getByRole('radio', { name: /Next paycheck/ }));
+    chooseRadio(0);
     await advance();
     expect(request).toHaveBeenCalledTimes(1);
     expect(JSON.parse(String(request.mock.calls[0][1]?.body))).toMatchObject({
@@ -210,25 +241,20 @@ describe('application flows', () => {
   it('hides disabled scenarios from navigation and redirects a disabled direct route', () => {
     renderApp('/date', ['raise', 'hire']);
 
-    expect(
-      screen.getByText('So... when does my paycheck get a little bigger? 👀'),
-    ).toBeInTheDocument();
+    expectScene('raise', 1);
     expect(screen.getAllByRole('option').map((option) => option.getAttribute('value'))).toEqual([
       'raise',
       'hire',
     ]);
-    expect(screen.queryByRole('option', { name: 'Go on a date with me' })).not.toBeInTheDocument();
   });
 
   it('uses Raise at the root whenever Raise is enabled', () => {
     renderApp('/', ['hire', 'raise']);
-    expect(
-      screen.getByText('So... when does my paycheck get a little bigger? 👀'),
-    ).toBeInTheDocument();
+    expectScene('raise', 1);
   });
 
   it('uses the first configured scenario at the root when Raise is disabled', () => {
     renderApp('/', ['date', 'hire']);
-    expect(screen.getByText('Coffee with me? ☕')).toBeInTheDocument();
+    expectScene('date', 1);
   });
 });

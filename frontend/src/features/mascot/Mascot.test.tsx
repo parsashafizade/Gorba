@@ -61,6 +61,6 @@ describe('mascot interaction lifetime', () => {
       });
       expect(stage).not.toHaveAttribute('data-asset', 'action.pointDown');
     }
-    expect(screen.queryByText('Your answer’s right down here 👀')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('kitten-bubble')).not.toBeInTheDocument();
   });
 });

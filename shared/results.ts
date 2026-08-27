@@ -55,6 +55,13 @@ export const finalRaisePercentage: Record<RaiseAmount, number> = {
   thirty: 32,
 };
 
+export const selectedRaisePercentage: Record<RaiseAmount, number> = {
+  five: 5,
+  ten: 10,
+  twenty: 20,
+  thirty: 30,
+};
+
 const includes = <T extends string>(values: readonly T[], value: unknown): value is T =>
   typeof value === 'string' && values.includes(value as T);
 

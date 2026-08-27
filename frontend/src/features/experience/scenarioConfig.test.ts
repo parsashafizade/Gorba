@@ -28,6 +28,6 @@ describe('No conversation cycle', () => {
   });
 
   it('does not reset button mechanics when the conversation wraps', () => {
-    expect(buttonScales(noConversationLength + 1)).toEqual({ no: 0.58, yes: 1.54 });
+    expect(buttonScales(noConversationLength + 1)).toEqual({ no: 0.72, yes: 1.54 });
   });
 });

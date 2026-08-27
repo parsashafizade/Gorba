@@ -24,6 +24,7 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
   const [noAttempts, setNoAttempts] = useState(0);
   const [emotion, setEmotion] = useState<MascotAssetKey>('gaze.center');
   const [reactionKey, setReactionKey] = useState<string | null>(null);
+  const [reactionTurn, setReactionTurn] = useState(0);
   const [recipientKey, setRecipientKey] = useState<string | null>(null);
   const [recipientLabelKey, setRecipientLabelKey] = useState<string | null>(null);
   const [selections, setSelections] = useState<ScenarioSelections>({});
@@ -45,6 +46,7 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
   const react = (nextEmotion: MascotAssetKey, nextReaction: string) => {
     setEmotion(nextEmotion);
     setReactionKey(nextReaction);
+    setReactionTurn((current) => current + 1);
   };
 
   const beginProgress = (
@@ -122,6 +124,7 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
       setStep(4);
       setEmotion('emotion.happyExcited');
       setReactionKey(`${scenario}.final.speech`);
+      setReactionTurn((current) => current + 1);
     });
   };
 
@@ -141,6 +144,7 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
       setStep(4);
       setEmotion('emotion.happyExcited');
       setReactionKey('date.final.speech');
+      setReactionTurn((current) => current + 1);
     });
   };
 
@@ -157,8 +161,10 @@ export function ScenarioExperience({ scenario }: ScenarioExperienceProps) {
       <div className={`experience-layout experience-layout--step-${step}`}>
         <div className="mascot-column">
           <Mascot
+            scenario={scenario}
             emotion={emotion}
             reaction={reactionKey ? t(reactionKey) : null}
+            reactionTurn={reactionTurn}
             recipientMessage={recipientKey ? t(recipientKey) : null}
             recipientLabel={recipientLabelKey ? t(recipientLabelKey) : null}
             trackingEnabled={!hasInteracted && step === 1}

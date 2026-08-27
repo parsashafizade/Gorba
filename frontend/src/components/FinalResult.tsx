@@ -1,51 +1,104 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { buildCompletedResult } from '../../../shared/results';
+import { buildCompletedResult, selectedRaisePercentage } from '../../../shared/results';
 import { dateFromId } from '../features/experience/dateTime';
 import type { ScenarioId, ScenarioSelections } from '../features/experience/model';
 
-export function FinalResult({
-  scenario,
-  selections,
-}: {
+type FinalResultProps = {
   scenario: ScenarioId;
   selections: ScenarioSelections;
-}) {
+};
+
+export function FinalResult({ scenario, selections }: FinalResultProps) {
   const { t, i18n } = useTranslation();
   const locale = i18n.resolvedLanguage === 'fa' ? 'fa-IR' : 'en-US';
   const result = buildCompletedResult(scenario, selections);
 
   if (result?.scenario === 'raise') {
+    const selected = selectedRaisePercentage[result.amount];
+    const adjustment = result.finalPercentage - selected;
     return (
-      <ResultFrame scenario="raise" seal={t('raise.final.seal')} title={t('raise.final.title')}>
-        <div className="raise-amount">
+      <ResultMotion scenario="raise">
+        <div className="raise-certificate__topline">
+          <span className="result-seal">{t('raise.final.seal')}</span>
+          <span className="raise-certificate__stamp" aria-hidden="true">
+            +{adjustment}
+          </span>
+        </div>
+        <h1>{t('raise.final.title')}</h1>
+
+        <div className="raise-certificate__hero">
+          <span className="raise-certificate__label">{t('raise.final.amountLabel')}</span>
           <strong>{new Intl.NumberFormat(locale).format(result.finalPercentage)}%</strong>
-          <span>{t('raise.final.amountLabel')}</span>
+          <div className="raise-certificate__scribble" aria-hidden="true" />
         </div>
-        <div className="result-data-row">
-          <span>{t('raise.final.timingLabel')}</span>
-          <strong>{t(`raise.timing.options.${result.timing}.label`)}</strong>
+
+        <div className="raise-certificate__details">
+          <div>
+            <span>{t('raise.final.selectedLabel')}</span>
+            <strong>{new Intl.NumberFormat(locale).format(selected)}%</strong>
+          </div>
+          <div className="raise-certificate__plus" aria-hidden="true">
+            +
+          </div>
+          <div>
+            <span>{t('raise.final.adjustmentLabel')}</span>
+            <strong>+{new Intl.NumberFormat(locale).format(adjustment)}%</strong>
+          </div>
+          <div className="raise-certificate__timing">
+            <span>{t('raise.final.timingLabel')}</span>
+            <strong>{t(`raise.timing.options.${result.timing}.label`)}</strong>
+          </div>
         </div>
+
         <p className="result-statement">{t('raise.final.statement')}</p>
         <span className="mischief-note">✎ {t('raise.final.mischief')}</span>
-      </ResultFrame>
+        <ResultOrnaments scenario="raise" />
+      </ResultMotion>
     );
   }
 
   if (result?.scenario === 'hire') {
     return (
-      <ResultFrame scenario="hire" seal={t('hire.final.seal')} title={t('hire.final.title')}>
-        <div className="hire-badge">
-          <span>{t('hire.final.roleLabel')}</span>
-          <strong>{t(`hire.role.options.${result.role}.label`)}</strong>
-          <small>{t('hire.final.upgrade')}</small>
+      <ResultMotion scenario="hire">
+        <div className="hire-pass__clip" aria-hidden="true">
+          <span />
         </div>
-        <div className="result-data-row">
-          <span>{t('hire.final.offerLabel')}</span>
-          <strong>{t(`hire.offer.options.${result.offer}.label`)}</strong>
+        <div className="hire-pass__header">
+          <span className="result-seal">{t('hire.final.seal')}</span>
+          <span className="hire-pass__number" aria-hidden="true">
+            01
+          </span>
         </div>
-        <p className="result-statement">{t('hire.final.statement')}</p>
-      </ResultFrame>
+
+        <div className="hire-pass__identity">
+          <div className="hire-pass__avatar" aria-hidden="true">
+            <span>★</span>
+          </div>
+          <div>
+            <small>{t('hire.final.passLabel')}</small>
+            <h1>{t('hire.final.title')}</h1>
+          </div>
+        </div>
+
+        <div className="hire-pass__fields">
+          <div>
+            <span>{t('hire.final.roleLabel')}</span>
+            <strong>{t(`hire.role.options.${result.role}.label`)}</strong>
+          </div>
+          <div>
+            <span>{t('hire.final.offerLabel')}</span>
+            <strong>{t(`hire.offer.options.${result.offer}.label`)}</strong>
+          </div>
+        </div>
+
+        <div className="hire-pass__footer">
+          <p>{t('hire.final.statement')}</p>
+          <span>{t('hire.final.upgrade')}</span>
+          <i aria-hidden="true" />
+        </div>
+        <ResultOrnaments scenario="hire" />
+      </ResultMotion>
     );
   }
 
@@ -57,54 +110,85 @@ export function FinalResult({
       month: 'long',
       day: 'numeric',
     }).format(date);
+    const localizedTime =
+      locale === 'fa-IR'
+        ? result.time.replace(/\d/g, (digit) =>
+            new Intl.NumberFormat('fa-IR').format(Number(digit)),
+          )
+        : result.time;
+
     return (
-      <ResultFrame scenario="date" seal={t('date.final.seal')} title={t('date.final.title')}>
-        <div className="date-ticket">
-          <span className="date-ticket__icon">{t(`${outingRoot}.icon`)}</span>
-          <strong>{t(`${outingRoot}.label`)}</strong>
-          <span className="date-ticket__day">{formattedDate}</span>
-          <span className="date-ticket__time" dir="ltr">
-            {locale === 'fa-IR'
-              ? result.time.replace(/\d/g, (digit) =>
-                  new Intl.NumberFormat('fa-IR').format(Number(digit)),
-                )
-              : result.time}
-          </span>
+      <ResultMotion scenario="date">
+        <div className="date-keepsake__pin" aria-hidden="true" />
+        <span className="result-seal">{t('date.final.seal')}</span>
+        <h1>{t('date.final.title')}</h1>
+
+        <div className="date-keepsake__ticket">
+          <div className="date-keepsake__activity">
+            <span className="date-keepsake__icon" aria-hidden="true">
+              {t(`${outingRoot}.icon`)}
+            </span>
+            <div>
+              <small>{t('date.final.activityLabel')}</small>
+              <strong>{t(`${outingRoot}.label`)}</strong>
+            </div>
+          </div>
+          <div className="date-keepsake__tear" aria-hidden="true" />
+          <div className="date-keepsake__when">
+            <div>
+              <small>{t('date.final.dateLabel')}</small>
+              <strong>{formattedDate}</strong>
+            </div>
+            <div>
+              <small>{t('date.final.timeLabel')}</small>
+              <strong dir="ltr">{localizedTime}</strong>
+            </div>
+          </div>
+          <div className="date-keepsake__barcode" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+          </div>
         </div>
+
         <p className="result-statement">{t('date.final.statement')}</p>
-      </ResultFrame>
+        <span className="date-keepsake__note">{t('date.final.ticketNote')}</span>
+        <ResultOrnaments scenario="date" />
+      </ResultMotion>
     );
   }
 
   return null;
 }
 
-function ResultFrame({
-  scenario,
-  seal,
-  title,
-  children,
-}: {
-  scenario: ScenarioId;
-  seal: string;
-  title: string;
-  children: React.ReactNode;
-}) {
+function ResultMotion({ scenario, children }: { scenario: ScenarioId; children: React.ReactNode }) {
+  const reducedMotion = useReducedMotion();
   return (
     <motion.section
       className={`result-card result-card--${scenario}`}
-      initial={{ opacity: 0, scale: 0.96, rotate: scenario === 'date' ? -1 : 0 }}
-      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-      transition={{ type: 'spring', stiffness: 180, damping: 19 }}
+      initial={reducedMotion ? false : { opacity: 0, y: 18, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={
+        reducedMotion
+          ? { duration: 0.01 }
+          : { type: 'spring', stiffness: 175, damping: 19, mass: 0.85 }
+      }
     >
-      <span className="result-seal">{seal}</span>
-      <h1>{title}</h1>
       {children}
-      <div className="result-charms" aria-hidden="true">
-        <span>{scenario === 'raise' ? '$' : scenario === 'hire' ? '★' : '♡'}</span>
-        <span>{scenario === 'raise' ? '+%' : scenario === 'hire' ? '✓' : '☕'}</span>
-        <span>{scenario === 'raise' ? '¢' : scenario === 'hire' ? 'CV' : '❀'}</span>
-      </div>
     </motion.section>
+  );
+}
+
+function ResultOrnaments({ scenario }: { scenario: ScenarioId }) {
+  return (
+    <div className="result-ornaments" aria-hidden="true">
+      <span>{scenario === 'raise' ? '$' : scenario === 'hire' ? '✓' : '☕'}</span>
+      <span>{scenario === 'raise' ? '+%' : scenario === 'hire' ? 'CV' : '✦'}</span>
+      <span>{scenario === 'raise' ? '↗' : scenario === 'hire' ? '★' : '♡'}</span>
+    </div>
   );
 }

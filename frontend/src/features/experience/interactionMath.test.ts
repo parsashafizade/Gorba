@@ -17,8 +17,8 @@ describe('progressive answer scaling', () => {
     expect(buttonScales(0)).toEqual({ no: 1, yes: 1 });
     expect(buttonScales(1)).toEqual({ no: 0.9, yes: 1.14 });
     expect(buttonScales(2)).toEqual({ no: 0.8, yes: 1.28 });
-    expect(buttonScales(3)).toEqual({ no: 0.7, yes: 1.42 });
-    expect(buttonScales(99)).toEqual({ no: 0.58, yes: 1.54 });
+    expect(buttonScales(3)).toEqual({ no: 0.72, yes: 1.42 });
+    expect(buttonScales(99)).toEqual({ no: 0.72, yes: 1.54 });
   });
 });
 

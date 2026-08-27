@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import type { ScenarioId } from '../features/experience/model';
 
 const stickerSets: Record<ScenarioId, string[]> = {
@@ -33,10 +34,11 @@ export function Decorations({ scenario }: { scenario: ScenarioId }) {
 }
 
 function StickerArt({ kind }: { kind: string }) {
+  const { t } = useTranslation();
   if (kind === 'paycheck')
     return (
       <div className="sticker-paper">
-        <b>PAY</b>
+        <b>{t('shared.decorations.paycheck')}</b>
         <i />
         <i />
         <span>+$</span>
@@ -70,7 +72,7 @@ function StickerArt({ kind }: { kind: string }) {
   if (kind === 'resume')
     return (
       <div className="sticker-resume">
-        <b>CV</b>
+        <b>{t('shared.decorations.resume')}</b>
         <i />
         <i />
         <span>★</span>
@@ -89,7 +91,8 @@ function StickerArt({ kind }: { kind: string }) {
         <i>⌁</i>
       </div>
     );
-  if (kind === 'hired') return <div className="sticker-stamp">HIRED</div>;
+  if (kind === 'hired')
+    return <div className="sticker-stamp">{t('shared.decorations.hired')}</div>;
   if (kind === 'badge')
     return (
       <div className="sticker-badge">

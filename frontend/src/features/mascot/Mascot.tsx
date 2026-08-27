@@ -1,5 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { ScenarioId } from '../experience/model';
 import {
   alignmentByAsset,
   allMascotAssetUrls,
@@ -7,6 +9,7 @@ import {
   type MascotAssetKey,
 } from './assets';
 import { assetMotion, mascotBehavior } from './config';
+import { reactionPlacementFor } from './dialogue';
 import { mapPointerToGaze } from './gaze';
 
 const decodeImage = async (src: string) => {
@@ -97,8 +100,10 @@ function MascotStage({ assetKey }: { assetKey: MascotAssetKey }) {
 }
 
 type MascotProps = {
+  scenario?: ScenarioId;
   emotion: MascotAssetKey;
   reaction?: string | null;
+  reactionTurn?: number;
   recipientMessage?: string | null;
   recipientLabel?: string | null;
   trackingEnabled: boolean;
@@ -106,19 +111,24 @@ type MascotProps = {
 };
 
 export function Mascot({
+  scenario = 'raise',
   emotion,
   reaction,
+  reactionTurn = 0,
   recipientMessage,
   recipientLabel,
   trackingEnabled,
   companion = false,
 }: MascotProps) {
+  const { t, i18n } = useTranslation();
   const stageHostRef = useRef<HTMLDivElement>(null);
   const gazeRef = useRef<MascotAssetKey>('gaze.center');
   const rafRef = useRef<number | null>(null);
   const [gaze, setGaze] = useState<MascotAssetKey>('gaze.center');
   const [temporary, setTemporary] = useState<MascotAssetKey | null>(null);
   const requestedAsset = trackingEnabled ? (temporary ?? gaze) : emotion;
+  const placement = reactionPlacementFor(reactionTurn);
+  const recipientInitialX = i18n.dir() === 'rtl' ? 36 : -36;
 
   useEffect(() => {
     const idle =
@@ -199,40 +209,53 @@ export function Mascot({
       ref={stageHostRef}
       layout
       className={`mascot ${companion ? 'mascot--companion' : ''}`}
-      aria-label="Bee-costume kitten mascot"
+      aria-label={t('shared.mascotLabel')}
+      data-scenario={scenario}
     >
       <MascotStage assetKey={requestedAsset} />
       <div className="dialogue-layer">
         <AnimatePresence mode="wait">
           {recipientMessage && (
             <motion.div
-              key="recipient-bubble"
+              key={recipientMessage}
               className="recipient-bubble"
               role="status"
               data-testid="recipient-bubble"
-              initial={{ opacity: 0, x: -8, rotate: -2 }}
-              animate={{ opacity: 1, x: 0, rotate: -1 }}
-              exit={{ opacity: 0, x: -5 }}
-              transition={{ duration: 0.18 }}
+              initial={{ opacity: 0, x: recipientInitialX, scale: 0.93 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: recipientInitialX * 0.4, scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 390, damping: 27, mass: 0.7 }}
             >
-              {recipientLabel && <small>{recipientLabel}</small>}
-              <span>{recipientMessage}</span>
+              <span className="recipient-bubble__avatar" aria-hidden="true">
+                {recipientLabel?.slice(0, 1)}
+              </span>
+              <span className="recipient-bubble__body">
+                {recipientLabel && <small>{recipientLabel}</small>}
+                <span>{recipientMessage}</span>
+              </span>
             </motion.div>
           )}
         </AnimatePresence>
         <AnimatePresence mode="wait">
           {reaction && (
             <motion.div
-              key="kitten-bubble"
-              className="reaction-bubble"
+              key={`${reactionTurn}-${reaction}`}
+              className={`reaction-bubble reaction-bubble--${placement}`}
               role="status"
               data-testid="kitten-bubble"
-              initial={{ opacity: 0, y: 7, scale: 0.94 }}
+              data-placement={placement}
+              initial={{
+                opacity: 0,
+                y: 8,
+                scale: 0.92,
+                rotate: placement.includes('left') ? -1 : 1,
+              }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.96 }}
-              transition={{ duration: 0.18 }}
+              transition={{ type: 'spring', stiffness: 410, damping: 27, mass: 0.68 }}
             >
-              {reaction}
+              <small>{t('shared.kitten')}</small>
+              <span>{reaction}</span>
             </motion.div>
           )}
         </AnimatePresence>

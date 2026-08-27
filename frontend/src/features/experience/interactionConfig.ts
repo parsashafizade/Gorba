@@ -8,7 +8,7 @@ export const interactionBehavior = {
   },
   buttons: {
     noScaleStep: 0.1,
-    noMinimumScale: 0.58,
+    noMinimumScale: 0.72,
     yesScaleStep: 0.14,
     yesMaximumScale: 1.54,
     randomMovementMargin: 14,
