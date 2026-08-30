@@ -407,9 +407,22 @@ You can contribute by:
 
 ## Author
 
-**Parsa Shafizade**
+<table>
+  <tr>
+    <td>
+      <a href="https://github.com/parsashafizade">
+        <img src="https://github.com/parsashafizade.png" width="95" height="95" alt="Parsa Shafizade" />
+      </a>
+    </td>
+    <td>
+      <strong>Parsa Shafizade</strong><br><br>
+      <a href="https://github.com/parsashafizade">
+        <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
+      </a>
+    </td>
+  </tr>
+</table>
 
-GitHub: [https://github.com/parsashafizade](https://github.com/parsashafizade)
 
 ---
 
