@@ -5125,3 +5125,78 @@ html[lang='fa'] .scenario-menu__option {
 .result-card--raise .mischief-note {
   color: var(--ink);
 }
+
+
+@media (max-width: 620px) {
+  .scenario-selector--custom {
+    width: min(56vw, 205px);
+  }
+
+  .scenario-trigger {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  .scenario-trigger__label {
+    padding-inline: 4px 26px;
+    font-size: 0.84rem;
+    font-weight: 780;
+  }
+
+  .scenario-menu {
+    width: min(238px, calc(100vw - 16px));
+    min-width: 220px;
+    padding: 7px;
+  }
+
+  .scenario-menu__option {
+    min-height: 48px;
+    gap: 7px;
+    padding: 7px 9px;
+    font-size: 0.82rem;
+  }
+
+  .scenario-menu__label {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+
+
+  .experience-layout--step-4 .reaction-bubble,
+  .experience-layout--step-4 .reaction-bubble--anchored {
+    left: calc((100vw - 100%) / -2 + 58px);
+  }
+
+
+  html,
+  body,
+  #root,
+  .app-shell {
+    min-height: 100dvh;
+  }
+
+  .experience {
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  .experience:has(.experience-layout--step-4) {
+    height: auto;
+    min-height: 100dvh;
+  }
+}
+
+@supports not (height: 100dvh) {
+  @media (max-width: 620px) {
+    .experience {
+      height: 100vh;
+      min-height: 100vh;
+    }
+
+    .experience:has(.experience-layout--step-4) {
+      height: auto;
+      min-height: 100vh;
+    }
+  }
+}

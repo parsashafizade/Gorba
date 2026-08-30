@@ -1,4 +1,4 @@
-import gazeCenter from '../../assets/bee-kitten/gaze/01_gaze_center_idle.webp';
+const gazeCenter = `${import.meta.env.BASE_URL}mascot/01_gaze_center_idle.webp`;
 import gazeLeft from '../../assets/bee-kitten/gaze/02_gaze_left.webp';
 import gazeRight from '../../assets/bee-kitten/gaze/03_gaze_right.webp';
 import gazeUp from '../../assets/bee-kitten/gaze/04_gaze_up.webp';

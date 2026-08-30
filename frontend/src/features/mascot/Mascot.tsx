@@ -125,12 +125,16 @@ function MascotStage({ assetKey }: { assetKey: MascotAssetKey }) {
       {layers.map((src, index) => (
         <motion.img
           // The two persistent slots intentionally reuse indexes.
+
           key={index}
           src={src}
           alt=""
           aria-hidden="true"
           className="mascot-layer"
           draggable={false}
+          loading={index === 0 ? 'eager' : 'lazy'}
+          fetchPriority={index === 0 ? 'high' : 'auto'}
+          decoding="async"
           style={{ translateX: alignment.x, translateY: alignment.y }}
           animate={{ opacity: activeLayer === index ? 1 : 0 }}
           transition={{ duration: reducedMotion ? 0.08 : duration, ease: 'easeOut' }}
@@ -172,19 +176,39 @@ export function Mascot({
   const placement = reactionPlacementFor(reactionTurn);
   const recipientInitialX = 36;
 
-  useEffect(() => {
-    const idle =
-      window.requestIdleCallback ??
-      ((callback: IdleRequestCallback) => window.setTimeout(callback, 1));
-    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
-    const handle = idle(() => {
+useEffect(() => {
+  let timeoutId: number | undefined;
+
+  const preloadRemainingMascotAssets = () => {
+    timeoutId = window.setTimeout(() => {
+      const initialSrc = getMascotAsset('gaze.center');
+
       for (const src of allMascotAssetUrls) {
+        if (src === initialSrc) continue;
+
         const image = new Image();
+        image.decoding = 'async';
         image.src = src;
       }
+    }, 500);
+  };
+
+  if (document.readyState === 'complete') {
+    preloadRemainingMascotAssets();
+  } else {
+    window.addEventListener('load', preloadRemainingMascotAssets, {
+      once: true,
     });
-    return () => cancelIdle(handle);
-  }, []);
+  }
+
+  return () => {
+    window.removeEventListener('load', preloadRemainingMascotAssets);
+
+    if (timeoutId !== undefined) {
+      window.clearTimeout(timeoutId);
+    }
+  };
+}, []);
 
   useEffect(() => {
     if (!trackingEnabled || !window.matchMedia('(hover: hover) and (pointer: fine)').matches)
