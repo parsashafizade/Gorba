@@ -5120,3 +5120,8 @@ html[lang='fa'] .scenario-menu__option {
     transition: none;
   }
 }
+.result-card--raise h1,
+.result-card--raise .raise-certificate__details strong,
+.result-card--raise .mischief-note {
+  color: var(--ink);
+}
