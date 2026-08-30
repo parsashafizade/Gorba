@@ -4298,7 +4298,7 @@ html[lang='fa'] .hire-pass__fields strong {
 
   .recipient-bubble {
     inset: auto;
-    top: -100%;
+    top: -3%;
     right: clamp(-120px, -28vw, -88px);
     bottom: auto;
     left: auto;
