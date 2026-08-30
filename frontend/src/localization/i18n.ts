@@ -5,12 +5,12 @@ import { resources } from './resources';
 export type Locale = 'fa' | 'en';
 
 const storedLocale = window.localStorage.getItem('tiny-yes-locale');
-const initialLocale: Locale = storedLocale === 'fa' ? 'fa' : 'en';
+const initialLocale: Locale = storedLocale === 'en' ? 'en' : 'fa';
 
 void i18n.use(initReactI18next).init({
   resources,
   lng: initialLocale,
-  fallbackLng: 'en',
+  fallbackLng: 'fa',
   supportedLngs: ['fa', 'en'],
   interpolation: { escapeValue: false },
 });
