@@ -2432,8 +2432,8 @@ body {
   font-weight: 850;
   transform: rotate(9deg);
 }
-
 .result-card--raise {
+  color: var(--ink);
   border-radius: 29px 42px 33px 39px;
   background:
     linear-gradient(90deg, transparent 0 31px, rgb(205 79 40 / 12%) 32px 34px, transparent 35px),
