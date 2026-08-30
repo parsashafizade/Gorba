@@ -19,11 +19,7 @@ Gorba turns simple questions into interactive conversations where the character 
 
 The project currently includes three experiences: **Ask for a Raise**, **Get Hired**, and **Plan a Date** — all powered by the same reusable interaction and mascot system.
 
-<br>
-
 <div align="center">
-
-<img src="gorba/emotion/15_emotion_happy_soft.webp" alt="Gorba" width="500" />
 
 <br><br>
 
@@ -31,13 +27,18 @@ The project currently includes three experiences: **Ask for a Raise**, **Get Hir
 
 <br><br>
 
-![Top Language](https://img.shields.io/github/languages/top/parsashafizade/Gorba?style=flat-square)
-![Languages](https://img.shields.io/github/languages/count/parsashafizade/Gorba?style=flat-square)
-![Last Commit](https://img.shields.io/github/last-commit/parsashafizade/Gorba?style=flat-square)
+<img src="https://img.shields.io/github/languages/top/parsashafizade/Gorba?style=flat-square" alt="Top Language" />
+<img src="https://img.shields.io/github/languages/count/parsashafizade/Gorba?style=flat-square" alt="Languages" />
+<img src="https://img.shields.io/github/last-commit/parsashafizade/Gorba?style=flat-square" alt="Last Commit" />
+
+<br><br>
 
 <a href="https://parsashafizade.github.io/Gorba/" target="_blank">
   <img src="https://img.shields.io/badge/View-Live%20Demo-111111?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Demo"/>
 </a>
+
+</div>
+
 
 </div>
 
