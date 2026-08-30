@@ -5126,10 +5126,9 @@ html[lang='fa'] .scenario-menu__option {
   color: var(--ink);
 }
 
-
 @media (max-width: 620px) {
   .scenario-selector--custom {
-    width: min(56vw, 205px);
+    width: min(64vw, 235px);
   }
 
   .scenario-trigger {
@@ -5138,9 +5137,11 @@ html[lang='fa'] .scenario-menu__option {
   }
 
   .scenario-trigger__label {
-    padding-inline: 4px 26px;
+    padding-inline: 6px 28px;
     font-size: 0.84rem;
-    font-weight: 780;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
   }
 
   .scenario-menu {
@@ -5162,12 +5163,10 @@ html[lang='fa'] .scenario-menu__option {
     white-space: nowrap;
   }
 
-
   .experience-layout--step-4 .reaction-bubble,
   .experience-layout--step-4 .reaction-bubble--anchored {
     left: calc((100vw - 100%) / -2 + 58px);
   }
-
 
   html,
   body,
